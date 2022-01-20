@@ -26,16 +26,16 @@ app.get("/students/gpa/:username/:password", async (req, res) => {
     res.send(data)
 });
 
-app.get("/students/info/", async (req, res) => {
-    const { username, password } = req.query;
+app.get("/students/info/:username/:password", async (req, res) => {
+    const { username, password } = req.params;
 
     const { data } = await axios.get(`https://gradualgrades.herokuapp.com/students/info?username=${username}&password=${password}`);
 
     res.send(data)
 });
 
-app.get("/students/currentclasses/", async (req, res) => {
-    const { username, password } = req.query;
+app.get("/students/currentclasses/:username/:password", async (req, res) => {
+    const { username, password } = req.params;
 
     const { data } = await axios.get(`https://gradualgrades.herokuapp.com/students/currentclasses?username=${username}&password=${password}`);
 
