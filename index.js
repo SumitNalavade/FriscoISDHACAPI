@@ -18,8 +18,8 @@ app.get("/", async (req, res) => {
     return res.send(data)
 });
 
-app.get("/students/gpa/", async (req, res) => {
-    const { username, password } = req.query;
+app.get("/students/gpa/:username/:password", async (req, res) => {
+    const { username, password } = req.params;
 
     const { data } = await axios.get(`https://gradualgrades.herokuapp.com/students/gpa?username=${username}&password=${password}`);
 
