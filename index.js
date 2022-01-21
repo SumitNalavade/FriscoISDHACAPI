@@ -26,12 +26,16 @@ app.get("/students/gpa/:username/:password", async (req, res) => {
     res.send(data)
 });
 
-app.get("/students/info/:username/:password", async (req, res) => {
-    const { username, password } = req.params;
+app.get("/students/info/:username/:password", async (req, res, next) => {
+    try {
+        const { username, password } = req.params;
 
-    const { data } = await axios.get(`https://gradualgrades.herokuapp.com/students/info?username=${username}&password=${password}`);
-
-    res.send(data)
+        const { data } = await axios.get(`https://gradualgrades.herokuapp.com/students/info?username=${username}&password=${password}`);
+    
+        res.send(data)
+    } catch(error) {
+        next(error)
+    }
 });
 
 app.get("/students/currentclasses/:username/:password", async (req, res) => {
@@ -53,4 +57,10 @@ app.post("/predictedGPA/", async(req, res) => {
     });
 
     return res.send(data);
+});
+
+app.use((err, req, res, next) => {
+    const { status=500, statusText="Internal Server Error" } = err.response;
+
+    return res.status(status).send(statusText);
 });
