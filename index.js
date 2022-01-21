@@ -59,6 +59,12 @@ app.post("/predictedGPA/", async(req, res) => {
     return res.send(data);
 });
 
+app.get("/satdates", async (req, res) => {
+    const { data } = await axios.get("https://gradualgrades.herokuapp.com/satdates");
+
+    return res.send(data);
+});
+
 app.use((err, req, res, next) => {
     const { status=500, statusText="Internal Server Error" } = err.response;
 
