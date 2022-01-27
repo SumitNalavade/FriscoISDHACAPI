@@ -38,6 +38,14 @@ app.get("/students/info/:username/:password", async (req, res, next) => {
     }
 });
 
+app.get("/students/schedule/:username/:password", async (req, res) => {
+    const { username, password } = req.params;
+
+    const { data } = await axios.get(`https://gradualgrades.herokuapp.com/students/schedule?username=${username}&password=${password}`);
+
+    res.send(data);
+});
+
 app.get("/students/currentclasses/:username/:password", async (req, res) => {
     const { username, password } = req.params;
 
