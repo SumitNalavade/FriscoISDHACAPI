@@ -1,6 +1,7 @@
 const { default: axios } = require("axios");
 const express = require("express")
 const cors = require("cors");
+const catchAsync = require("./catchAsync")
 const app = express();
 app.use(cors({
     origin: '*'
@@ -18,43 +19,42 @@ app.get("/", async (req, res) => {
     return res.send(data)
 });
 
-app.get("/students/gpa/:username/:password", async (req, res) => {
-    const { username, password } = req.params;
+app.get("/students/gpa/:username/:password", catchAsync(async (req, res) => {
+        const { username, password } = req.params;
 
-    const { data } = await axios.get(`https://gradualgrades.herokuapp.com/students/gpa?username=${username}&password=${password}`);
+        const { data } = await axios.get(`https://gradualgrades.herokuapp.com/students/gpa?username=${username}&password=${password}`);
+    
+        res.send(data)
+   
+        return res.status(500).send(error.response.data)
+}));
 
-    res.send(data)
-});
-
-app.get("/students/info/:username/:password", async (req, res, next) => {
-    try {
+app.get("/students/info/:username/:password", catchAsync(async (req, res, next) => {
+    
         const { username, password } = req.params;
 
         const { data } = await axios.get(`https://gradualgrades.herokuapp.com/students/info?username=${username}&password=${password}`);
     
         res.send(data)
-    } catch(error) {
-        next(error)
-    }
-});
+}));
 
-app.get("/students/schedule/:username/:password", async (req, res) => {
+app.get("/students/schedule/:username/:password", catchAsync(async (req, res) => {
     const { username, password } = req.params;
 
     const { data } = await axios.get(`https://gradualgrades.herokuapp.com/students/schedule?username=${username}&password=${password}`);
 
     res.send(data);
-});
+}));
 
-app.get("/students/currentclasses/:username/:password", async (req, res) => {
+app.get("/students/currentclasses/:username/:password", catchAsync(async (req, res) => {
     const { username, password } = req.params;
 
     const { data } = await axios.get(`https://gradualgrades.herokuapp.com/students/currentclasses?username=${username}&password=${password}`);
 
     res.send(data)
-});
+}));
 
-app.post("/predictedGPA/", async(req, res) => {
+app.post("/predictedGPA/", catchAsync(async(req, res) => {
     const { weightedGPA, unweightedGPA, studentGrade, currentClasses } = req.body;
 
     const { data } = await axios.post(`https://gradualgrades.herokuapp.com/predictedGPA`, {
@@ -65,16 +65,16 @@ app.post("/predictedGPA/", async(req, res) => {
     });
 
     return res.send(data);
-});
+}));
 
-app.get("/satdates", async (req, res) => {
+app.get("/satdates", catchAsync(async (req, res) => {
     const { data } = await axios.get("https://gradualgrades.herokuapp.com/satdates");
 
     return res.send(data);
-});
+}));
 
 app.use((err, req, res, next) => {
-    const { status=500, statusText="Internal Server Error" } = err.response;
+    const { status=500, data="Internal Server Error" } = err.response;
 
-    return res.status(status).send(statusText);
+    return res.status(status).send(data);
 });
