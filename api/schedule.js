@@ -1,8 +1,4 @@
 const { default: axios } = require("axios");
-const cors = require("cors");
-app.use(cors({
-    origin: '*'
-}));
 
 module.exports = async (req, res) => {
     const { username, password } = req.query;
