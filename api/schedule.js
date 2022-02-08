@@ -1,6 +1,8 @@
 const { default: axios } = require("axios");
 
 module.exports = async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    
     const { username, password } = req.query;
 
     const { data } = await axios.get(`https://gradualgrades.herokuapp.com/students/schedule?username=${username}&password=${password}`);
