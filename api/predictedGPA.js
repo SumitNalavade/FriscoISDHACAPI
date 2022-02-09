@@ -1,6 +1,7 @@
 const { default: axios } = require("axios");
 
 module.exports = async (req, res) => {
+    if (req.method === "OPTIONS") {
     res.setHeader('Access-Control-Allow-Origin', '*');
     const { weightedGPA, unweightedGPA, studentGrade, currentClasses } = req.body;
 
@@ -12,4 +13,6 @@ module.exports = async (req, res) => {
     });
 
     return res.send(data);
+    }
+    
 }
