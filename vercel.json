@@ -23,7 +23,13 @@
         {
             "src": "/predictedGPA",
             "dest": "/api/predictedGPA.js",
-            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"]
+            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+            "headers": {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+                "Access-Control-Allow-Credentials": "true"
+            },
+            "continue": true
         },
         {
             "src": "/satdates",
