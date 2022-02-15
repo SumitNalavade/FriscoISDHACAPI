@@ -22,7 +22,8 @@
         },
         {
             "src": "/predictedGPA",
-            "dest": "/api/predictedGPA.js"
+            "dest": "/api/predictedGPA.js",
+            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"]
         },
         {
             "src": "/satdates",
