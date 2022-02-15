@@ -1,6 +1,11 @@
 const { default: axios } = require("axios");
+const { micro } = require("micro-cors");
 
-module.exports = async (req, res) => {
+async function predictedGPA(req, res) {
+    if (req.method === "OPTIONS") {
+      return res.status(200).end();
+    }
+    
     res.setHeader('Access-Control-Allow-Origin', '*');
     const { weightedGPA, unweightedGPA, studentGrade, currentClasses } = req.body;
 
@@ -12,4 +17,8 @@ module.exports = async (req, res) => {
     });
 
     return res.send(data);
-}
+  }
+
+const cors = micro();
+
+export default cors(MyApi);
