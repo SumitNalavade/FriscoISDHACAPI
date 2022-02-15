@@ -1,35 +1,4 @@
 {
-    "routes": [
-        {
-            "src": "/",
-            "dest": "/api/mainpage.js"
-        },
-        {
-            "src": "/students/gpa",
-            "dest": "/api/gpa.js"
-        },
-        {
-            "src": "/students/info",
-            "dest": "/api/info.js"
-        },
-        {
-            "src": "/students/schedule",
-            "dest": "/api/schedule.js"
-        },
-        {
-            "src": "/students/currentclasses",
-            "dest": "/api/currentclasses.js"
-        },
-        {
-            "src": "/predictedGPA",
-            "dest": "/api/predictedGPA.js",
-            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"]
-        },
-        {
-            "src": "/satdates",
-            "dest": "/api/satdates.js"
-        }
-    ],
     "headers": [
         {
           "source": "/.*",
