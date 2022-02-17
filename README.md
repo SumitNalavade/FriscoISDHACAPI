@@ -12,7 +12,7 @@ If you are looking to build a Grade App, feel free to reach out us and be a part
 
 ----------
 
-Base API URL: http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/
+Base API URL: https://gradual-deploy.vercel.app
 
 Technologies Used:
 -
@@ -55,7 +55,7 @@ Query Parameters:
 
 Example Request (Axios):
 ``` javascript
-axios.get("http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/students/gpa/john/doe").then((res) => {
+axios.get("https://gradual-deploy.vercel.app/students/gpa?username=john&password=doe").then((res) => {
     console.log(res.data); //Make sure to denote what data you want from the response
 }).catch((error) => {
     console.log(error);
@@ -64,7 +64,7 @@ axios.get("http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/studen
 cURL:
 ``` cURL
 curl -X GET \
-  'http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/students/gpa/john/doe' \
+  'https://gradual-deploy.vercel.app/students/gpa?username=john&password=doe' \
   -H 'Accept: */*' \
   -H 'User-Agent: Thunder Client (https://www.thunderclient.io)'
 ```
@@ -92,7 +92,7 @@ Query Parameters:
 
 Example Request (Axios):
 ``` javascript
-axios.get("http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/students/info/john/doe").then((res) => {
+axios.get("https://gradual-deploy.vercel.app/students/info?username=john&password=doe").then((res) => {
     console.log(res.data);
 }).catch((error) => {
     console.log(error);
@@ -101,7 +101,7 @@ axios.get("http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/studen
 cURL:
 ``` cURL
 curl -X GET \
-  'http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/students/info/john/doe' \
+  'https://gradual-deploy.vercel.app/students/info?username=john&password=doe' \
   -H 'Accept: */*' \
   -H 'User-Agent: Thunder Client (https://www.thunderclient.io)'
 ```
@@ -132,7 +132,7 @@ Query Parameters:
 
 Example Request (Axios):
 ``` javascript
-axios.get("http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/students/schedule/john/doe").then((res) => {
+axios.get("https://gradual-deploy.vercel.app/students/schedule?username=john&password=doe").then((res) => {
     console.log(res.data);
 }).catch((error) => {
     console.log(error);
@@ -141,7 +141,7 @@ axios.get("http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/studen
 cURL:
 ``` cURL
 curl -X GET \
-  'http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/students/schedule/john/doe' \
+  'https://gradual-deploy.vercel.app/students/schedule?username=john&password=doe' \
   -H 'Accept: */*' \
   -H 'User-Agent: Thunder Client (https://www.thunderclient.io)'
 ```
@@ -356,7 +356,7 @@ Query Parameters:
 
 Example Request (Axios):
 ``` javascript
-axios.get("http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/students/currentclasses/john/doe").then((res) => {
+axios.get("https://gradual-deploy.vercel.app/students/currentclasses?username=john&password=doe").then((res) => {
     console.log(res.data);
 }).catch((error) => {
     console.log(error);
@@ -365,7 +365,7 @@ axios.get("http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/studen
 
 ``` cURL
 curl -X GET \
-  'http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/students/currentclasses/john/doe' \
+  'https://gradual-deploy.vercel.app/students/currentclasses?username=john&password=doe' \
   -H 'Accept: */*' \
   -H 'User-Agent: Thunder Client (https://www.thunderclient.io)'
 ```
@@ -722,7 +722,7 @@ Body (JSON): *Route will accept only JSON data in the body
 Example Request (Axios):
 
 ```javascript
-  axios.post(`http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/predictedGPA`, {
+  axios.post(`https://gradual-deploy.vercel.app/predictedGPA`, {
     weightedGPA: 5.05,
     unweightedGPA: 3.88,
     studentGrade: 12,
@@ -780,7 +780,7 @@ Example Request (Axios):
 Example Request (cURL):
 ``` cURL
 curl -X POST \
-  'http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/predictedGPA' \
+  'https://gradual-deploy.vercel.app/predictedGPA' \
   -H 'Accept: */*' \
   -H 'User-Agent: Thunder Client (https://www.thunderclient.io)' \
   -H 'Content-Type: application/json' \
@@ -862,7 +862,7 @@ axios.get("https://gradual-deploy.vercel.app/satdates").then((res) => {
 cURL:
 ``` cURL
 curl -X GET \
-  'http://gradual-env.eba-57kd6mpm.us-east-2.elasticbeanstalk.com/satdates' \
+  'https://gradual-deploy.vercel.app/satdates' \
   -H 'Accept: */*' \
   -H 'User-Agent: Thunder Client (https://www.thunderclient.io)'
 ```
