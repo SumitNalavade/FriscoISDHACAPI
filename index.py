@@ -106,9 +106,9 @@ def getCurrentClasses(username, password):
                 newCourse.updateDate = parser.find("span", "sg-header-sub-heading").text.strip().replace("(Last Updated: ", "").replace(")", "")
                 newCourse.grade = parser.find("span", "sg-header-heading sg-right").text.strip().replace("Student Grades ", "").replace("%", "")
             
-                if("adv" in newCourse.name.lower() or "ap" in newCourse.name.lower()):
+                if("ap" in newCourse.name.lower()):
                     newCourse.weight = "6"
-                elif("ism" in newCourse.name.lower() or "academic dec" in newCourse.name.lower()):
+                elif("ism" in newCourse.name.lower() or "academic dec" in newCourse.name.lower() or "adv" in newCourse.name.lower()):
                     newCourse.weight = "5.5"
                 else:
                     newCourse.weight = "5"
