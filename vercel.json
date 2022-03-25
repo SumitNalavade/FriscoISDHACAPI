@@ -27,6 +27,10 @@
         {
             "src": "/satdates",
             "dest": "/api/satdates.js"
+        },
+        {
+            "src": "/pastassignments",
+            "dest": "/api/pastassignments.js"
         }
     ]
 }
