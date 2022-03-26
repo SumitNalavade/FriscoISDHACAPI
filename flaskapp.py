@@ -1,4 +1,3 @@
-from crypt import methods
 from flask import Flask, request
 from flask_cors import CORS
 from index import (getGPAS, getInfo, getCurrentClasses, getPast,
@@ -20,7 +19,14 @@ def pastAssignments():
 
 
     if(username.lower() == "john" and password.lower() == "doe"):
-        return currentClasses
+        if(quarter == "1"):
+            return firstQuarter
+        elif (quarter == "2"):
+            return secondQuarter
+        elif (quarter == "3"):
+            return thirdQuarter
+        elif (quarter == "4"):
+            return fourthQuarter
 
     courses = []
 
