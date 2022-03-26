@@ -21,16 +21,16 @@
             "dest": "/api/currentclasses.js"
         },
         {
+            "src": "/students/pastassignments",
+            "dest": "/api/pastassignments.js"
+        },
+        {
             "src": "/predictedGPA",
             "dest": "/api/predictedGPA.js"
         },
         {
             "src": "/satdates",
             "dest": "/api/satdates.js"
-        },
-        {
-            "src": "/pastassignments",
-            "dest": "/api/pastassignments.js"
         }
     ]
 }
