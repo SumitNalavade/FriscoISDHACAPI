@@ -17,26 +17,13 @@ def getPast(username, password, quarter):
             headerContainer = parser.find_all("div", "sg-header sg-header-square")
             assignementsContainer = parser.find_all("div", "sg-content-grid")
 
-            newCourse = Course("", "", "", "", "", [])
+            newCourse = Course("", "", "", [])
 
             for hc in headerContainer:
                 parser = createBS4Parser(f"<html><body>{hc}</body></html>")
                 newCourse.name = parser.find("a", "sg-header-heading").text.strip()
                 newCourse.updateDate = parser.find("span", "sg-header-sub-heading").text.strip().replace("(Last Updated: ", "").replace(")", "")
                 newCourse.grade = parser.find("span", "sg-header-heading sg-right").text.strip().replace("Student Grades ", "").replace("%", "")
-            
-                if("ap" in newCourse.name.lower()):
-                    newCourse.weight = "6"
-                elif("ism" in newCourse.name.lower() or "academic dec" in newCourse.name.lower() or "adv" in newCourse.name.lower()):
-                    newCourse.weight = "5.5"
-                else:
-                    newCourse.weight = "5"
-
-                for name in doubleWeighted:
-                    if(name in newCourse.name.lower()):
-                        newCourse.credits = "2"
-                    else:
-                        newCourse.credits = "1"
                 
             for ac in assignementsContainer:
                 parser = createBS4Parser(f"<html><body>{ac}</body></html>")
@@ -70,22 +57,6 @@ def getPast(username, password, quarter):
     except:
         return AppError(500, "Failed to get current classes")
 
-#Get current student GPAs from their transcript
-def getGPAS(username, password):
-    try:
-        transcriptDOM = getPage(username, password, TRANSCRIPT_URL)
-        
-        parser = createBS4Parser(transcriptDOM.text)
-        weightedGPA = parser.find(id="plnMain_rpTranscriptGroup_lblGPACum1").text
-        unWeightedGPA = parser.find(id="plnMain_rpTranscriptGroup_lblGPACum2").text
-
-        return {
-            "weightedGPA": weightedGPA,
-            "unweightedGPA": unWeightedGPA
-        }
-    except:
-        return AppError(400, "Failed to get GPAs")
-
 #Get student info
 def getInfo(username, password):
     try:
@@ -98,20 +69,8 @@ def getInfo(username, password):
         studentBuilding = parser.find(id="plnMain_lblBuildingName").text
         studentGrade = parser.find(id="plnMain_lblGrade").text
 
-        #Try to get the studentID from the registration page
-        #If this fails, try to get the studentID from the student schedule page
-        #Thank you @AniruddhAnand for this
-        try:
-            studentID = parser.find(id="plnMain_lblRegStudentID").text
-        except:
-            studentScheduleDOM = getPage(username, password, STUDENTSCHEDULE_URL)
-            parser = createBS4Parser(studentScheduleDOM.text)
-            studentID = parser.find(id="plnMain_lblStudentIDValue").text
-
-
         return {
             "name" : studentName,
-            "id" : studentID,
             "grade" : studentGrade, 
             "birthdate" : studentBirthDate,
             "campus" : studentBuilding,
@@ -164,26 +123,13 @@ def getCurrentClasses(username, password):
             headerContainer = parser.find_all("div", "sg-header sg-header-square")
             assignementsContainer = parser.find_all("div", "sg-content-grid")
 
-            newCourse = Course("", "", "", "", "", [])
+            newCourse = Course("", "", "", [])
 
             for hc in headerContainer:
                 parser = createBS4Parser(f"<html><body>{hc}</body></html>")
                 newCourse.name = parser.find("a", "sg-header-heading").text.strip()
                 newCourse.updateDate = parser.find("span", "sg-header-sub-heading").text.strip().replace("(Last Updated: ", "").replace(")", "")
                 newCourse.grade = parser.find("span", "sg-header-heading sg-right").text.strip().replace("Student Grades ", "").replace("%", "")
-            
-                if("ap" in newCourse.name.lower()):
-                    newCourse.weight = "6"
-                elif("ism" in newCourse.name.lower() or "academic dec" in newCourse.name.lower() or "adv" in newCourse.name.lower()):
-                    newCourse.weight = "5.5"
-                else:
-                    newCourse.weight = "5"
-
-                for name in doubleWeighted:
-                    if(name in newCourse.name.lower()):
-                        newCourse.credits = "2"
-                    else:
-                        newCourse.credits = "1"
                 
             for ac in assignementsContainer:
                 parser = createBS4Parser(f"<html><body>{ac}</body></html>")
@@ -216,63 +162,3 @@ def getCurrentClasses(username, password):
         return courses
     except:
         return AppError(500, "Failed to get current classes")
-
-def predictGPA(currentWeightedGPA, currentUnweightedGPA, studentGrade, currentClasses):
-    pastSemesters = ((studentGrade - 8) * 2) - 1;
-    finalWeightedGPA = 0
-    finalUnweightedGPA = 0
-
-    weightedGPAList = [];
-    unweightedGPAList = [];
-    totalCredits = 0
-    for course in currentClasses:
-        totalCredits += course["credits"]
-
-    for course in currentClasses:
-        weightedGPA = 0
-        unweightedGPA = 0
-
-        if(course["grade"] < 70):
-            weightedGPA = 0
-            unweightedGPA = 0
-        elif(course["grade"] == 70):
-            weightedGPA = 3
-            unweightedGPA = 2
-        else:
-            weightedGPA = ((course["weight"] - ((100 - course["grade"])/10)) * course["credits"])
-            unweightedGPA = ((4.0 - ((90 - course["grade"])/10))* course["credits"])
-
-            if(course["credits"] == 2 and unweightedGPA > 8):
-                unweightedGPA = 8.0
-            elif(unweightedGPA > 4):
-                unweightedGPA = 4
-
-        weightedGPAList.append(weightedGPA)
-        unweightedGPAList.append(unweightedGPA)   
-
-    finalWeightedGPA = 0
-    finalUnweightedGPA = 0
-
-    for i in weightedGPAList:
-        finalWeightedGPA += i
-    finalWeightedGPA /= totalCredits
-
-    for i in unweightedGPAList:
-        finalUnweightedGPA += i
-    finalUnweightedGPA /= totalCredits
-
-    finalWeightedGPA = (((currentWeightedGPA) * pastSemesters) + finalWeightedGPA) / (pastSemesters+1)
-    finalUnweightedGPA = (((currentUnweightedGPA) * pastSemesters) + finalUnweightedGPA) / (pastSemesters+1)  
-
-
-    return { "finalWeightedGPA" : finalWeightedGPA, "finalUnweightedGPA" : finalUnweightedGPA }
-
-def getSATDates():
-    try:
-        session_requests = requests.session()
-        result = session_requests.get(SATSCHEDULE_URL)
-
-        parser = createBS4Parser(result.text)
-        return [x.text.strip().replace("**", "") for x in parser.find_all("td", "cb-table-callout")]
-    except:
-        return AppError(500, "Failed to get SAT dates")

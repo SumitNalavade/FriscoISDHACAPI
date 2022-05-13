@@ -1,9 +1,9 @@
-# [GET] Student GPAs
+# [GET] Student Info
 
-Get a student's most recently published weighted and unweighted GPA from HAC
+Get a student's registration information from HAC (Name, Grade, Counselors etc...)
 
 ```http
-GET /students/gpa?username={username}&password={password}
+GET /students/info?username={username}&password={password}
 ```
 
 ### Query Parameters
@@ -23,8 +23,8 @@ import TabItem from '@theme/TabItem';
 <TabItem value="Node.js" label="Node.js (Axios)">
 
 ```js
-axios.get("https://gradual-deploy.vercel.app/students/gpa?username=john&password=doe").then((res) => {
-    console.log(res.data); //Make sure to denote what data you want from the response
+axios.get("https://gradual-deploy.vercel.app/students/info?username=john&password=doe").then((res) => {
+    console.log(res.data);
 }).catch((error) => {
     console.log(error);
 })
@@ -34,7 +34,7 @@ axios.get("https://gradual-deploy.vercel.app/students/gpa?username=john&password
 <TabItem value="Javascript (Fetch)">
 
 ```js
-fetch("https://gradual-deploy.vercel.app/students/gpa?username=john&password=doe", { 
+fetch("https://gradual-deploy.vercel.app/students/info?username=john&password=doe", { 
   method: "GET"
 }).then(function(response) {
   return response.text();
@@ -49,7 +49,7 @@ fetch("https://gradual-deploy.vercel.app/students/gpa?username=john&password=doe
 ```python
 import requests
 
-reqUrl = "https://gradual-deploy.vercel.app/students/gpa?username=john&password=doe"
+reqUrl = "https://gradual-deploy.vercel.app/students/info?username=john&password=doe"
 
 payload = ""
 
@@ -65,7 +65,7 @@ print(response.text)
 ```cs
 var client = new HttpClient();
 var request = new HttpRequestMessage();
-request.RequestUri = new Uri("https://gradual-deploy.vercel.app/students/gpa?username=john&password=doe");
+request.RequestUri = new Uri("https://gradual-deploy.vercel.app/students/info?username=john&password=doe");
 request.Method = HttpMethod.Get;
 
 request.Headers.Add("Accept", "*/*");
@@ -82,7 +82,7 @@ Console.WriteLine(result);
 
 ```cURL
 curl -X GET \
-  'https://gradual-deploy.vercel.app/students/gpa?username=john&password=doe' \
+  'https://gradual-deploy.vercel.app/students/info?username=john&password=doe' \
   --header 'Accept: */*' \
   --header 'User-Agent: Thunder Client (https://www.thunderclient.com)'
 ```
@@ -93,7 +93,10 @@ curl -X GET \
 ### Example Response
 ```json
 {
-    "unweightedGPA" : "3.8800",
-    "weightedGPA" : "5.0500"
+    "studentBirthDate": "12/24/2003",
+    "studentBuilding": "Heritage High School",
+    "studentGrade": "12",
+    "studentID": "123456",
+    "studentName": "Jonh Doe"
 }
 ```
