@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # [GET] Student Info
 
 Get a student's registration information from HAC (Name, Grade, Counselors etc...)
