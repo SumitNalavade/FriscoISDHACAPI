@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # [GET] Student Schedule
 
 Get a student's schedule

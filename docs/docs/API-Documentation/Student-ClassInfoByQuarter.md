@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 # [GET] Class Information By Quarter
 
 Get information on each class a student is taking including assignments and grades by quarter

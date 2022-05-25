@@ -1,3 +1,8 @@
+---
+sidebar_position: 2
+---
+
+
 # [GET] Student GPAs
 
 Get a student's most recently published weighted and unweighted GPA from HAC

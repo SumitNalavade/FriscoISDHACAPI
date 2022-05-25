@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # [GET] Student Current Classes Information
 
 Get information on each class a student is taking including assignments and grades
