@@ -12,13 +12,13 @@ Powers the Gradual Grades mobile app developed with @mjdierkes. https://github.c
 API DOCUMENTATION:
 https://fisdhacapi.netlify.app
 
-Technologies Used:
--
-- Python
-- Flask
-- BeautifulSoup
-- Vercel
-- Heroku
+Routes:
+- GET student GPAs
+- GET student information
+- GET student schedule
+- GET student class data with assignment details for current quarter
+- GET student class data with assignment details for ANY QUARTER
+- POST get student predicted GPAs
 
 <br>
 ## FAQ
