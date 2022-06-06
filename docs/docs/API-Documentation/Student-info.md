@@ -72,23 +72,31 @@ import Foundation
 import FoundationNetworking
 #endif
 
-var semaphore = DispatchSemaphore (value: 0)
 
-var request = URLRequest(url: URL(string: "https://gradual-deploy.vercel.app/students/info?username=john&password=doe")!,timeoutInterval: Double.infinity)
-request.httpMethod = "GET"
-
-let task = URLSession.shared.dataTask(with: request) { data, response, error in 
-  guard let data = data else {
-    print(String(describing: error))
-    semaphore.signal()
-    return
-  }
-  print(String(data: data, encoding: .utf8)!)
-  semaphore.signal()
+//Define a function to get the data from the API
+func getData(_ completion: @escaping ([String: String]) -> ()) {
+  let urlPath = "https://gradual-deploy.vercel.app/students/info?username=john&password=doe"
+        
+  guard let url = URL(string: urlPath) else { return }
+        
+  let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+    guard let data = data else { return }
+      do {
+        if let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
+          let results = jsonResult as! [String: String]
+            completion(results)
+          }
+            } catch {
+                
+            }
+        }
+  task.resume()
 }
 
-task.resume()
-semaphore.wait()
+//Call the function and print the data
+getData{ (studentData) in
+    print(studentData)
+}
 ```
 
 </TabItem>
