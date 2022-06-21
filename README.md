@@ -1,6 +1,12 @@
 
 # FRISCO ISD HAC API
 
+UPDATE: HAC IS CURRENTLY DOWN FOR THE SUMMER.
+
+Please check back when the school year opens or use the example routes given below for a fake user.
+
+-----------------
+
 REST API to scrape student information from Frisco ISD's Home Access Center (HAC) using python requests and Beautiful Soup
 
 
