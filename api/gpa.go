@@ -11,33 +11,32 @@ import (
 	"github.com/SumitNalavade/FRISCOISDHACAPIV2/utils"
 )
 
-const transcriptPageURL string = "https://hac.friscoisd.org/HomeAccess/Content/Student/Transcript.aspx"
-
-type gpaResponse struct {
-    UnweightedGPA string `json:"unweightedGPA"`
-	WeightedGPA string `json:"weightedGPA"`
-}
-
 func GPAHandler(w http.ResponseWriter, r *http.Request) {
+	type response struct {
+		UnweightedGPA string `json:"unweightedGPA"`
+		WeightedGPA   string `json:"weightedGPA"`
+	}
+
 	queryParams := r.URL.Query()
 
 	username := queryParams.Get("username")
 	password := queryParams.Get("password")
 
-	pageContent := utils.GetPageContent(username, password, transcriptPageURL)
-
+	pageContent := utils.GetPageContent(username, password, utils.TRANSCRIPTURL)
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(pageContent))
 
-	weightedGPA := utils.FindFromDoc(doc, "#plnMain_rpTranscriptGroup_lblGPACum1").Text()
-	unweightedGPA := utils.FindFromDoc(doc, "#plnMain_rpTranscriptGroup_lblGPACum2").Text()
+	foundContent := utils.FindContentFromDoc(doc, "#plnMain_rpTranscriptGroup_lblGPACum1", "#plnMain_rpTranscriptGroup_lblGPACum2")
 
-	responseObj := gpaResponse{
-		WeightedGPA: weightedGPA,
+	weightedGPA := foundContent[0].Value
+	unweightedGPA := foundContent[1].Value
+
+	responseObj := response{
+		WeightedGPA:   weightedGPA,
 		UnweightedGPA: unweightedGPA,
 	}
 
-	response, _ := json.Marshal( responseObj )
+	jsonResponse, _ := json.Marshal(responseObj)
 
 	w.Header().Add("Content-Type", "application/json")
-	fmt.Fprintf(w, string(response))
+	fmt.Fprintf(w, string(jsonResponse))
 }
