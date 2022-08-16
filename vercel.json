@@ -1,32 +1,36 @@
 {
     "routes": [
         {
+            "src": "/",
+            "dest": "/api/mainpage.js"
+        },
+        {
             "src": "/students/gpa",
-            "dest": "/api/gpa.go"
+            "dest": "/api/gpa.js"
         },
         {
             "src": "/students/info",
-            "dest": "/api/info.go"
+            "dest": "/api/info.js"
         },
         {
             "src": "/students/schedule",
-            "dest": "/api/schedule.go"
+            "dest": "/api/schedule.js"
         },
         {
             "src": "/students/currentclasses",
-            "dest": "/api/currentclasses.go"
+            "dest": "/api/currentclasses.js"
         },
         {
             "src": "/students/pastassignments",
-            "dest": "/api/pastassignments.go"
-        },
-        {
-            "src": "/students/predictedGPA",
-            "dest": "/api/predictedgpa.go"
+            "dest": "/api/pastassignments.js"
         },
         {
             "src": "/predictedGPA",
-            "dest": "/api/predictedgpa.go"
+            "dest": "/api/predictedGPA.js"
+        },
+        {
+            "src": "/satdates",
+            "dest": "/api/satdates.js"
         }
     ]
 }
