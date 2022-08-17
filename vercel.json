@@ -1,6 +1,10 @@
 {
     "routes": [
         {
+            "src": "/",
+            "dest": "/api/home.go"
+        },
+        {
             "src": "/students/gpa",
             "dest": "/api/gpa.go"
         },
