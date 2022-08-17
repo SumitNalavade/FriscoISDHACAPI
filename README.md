@@ -22,9 +22,9 @@ The data below shows our results after 10 trials in each language (less is bette
 |  | 1180 | 724 | 729 |
 | Average | 1135.1 | 1097.9 | 796.8 |
 
-Average API response time for the /students/schedule route after 10 trials each.
+Average API response time for the ```/students/schedule``` route after 10 trials each.
 
-Data shows ✨ **~ 70.1965% increase** in loading times after rewriting API in Go (concurrent).
+Data shows ✨ <b>~ 70.1965% increase</b> in loading times after rewriting API in Go (concurrent).
 
 ### Two sample ‘T’ test for significance
 
@@ -36,4 +36,4 @@ $a = 0.05$
 
 $p = 0.0394$
 
-Because the $p$ value, 0.0394 is less than our $a=0.05$, we reject the null hypothesis, there is a significant difference in API response time when rewriting the API in Go.
+Because the $p$ value, 0.0394 is less than our $a=0.05$, we <b>reject the null hypothesis</b>, there is a significant difference in API response time when rewriting the API in Go.
