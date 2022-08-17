@@ -12,15 +12,17 @@ import (
 )
 
 func GPAHandler(w http.ResponseWriter, r *http.Request) {
-	type response struct {
-		UnweightedGPA string `json:"unweightedGPA"`
-		WeightedGPA   string `json:"weightedGPA"`
-	}
-
 	queryParams := r.URL.Query()
 
 	username := queryParams.Get("username")
 	password := queryParams.Get("password")
+
+	if username == "john" && password == "doe" {
+		response, _ := json.Marshal(utils.FakeStudentGPAs)
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, string(response))
+		return
+	}
 
 	pageContent := utils.GetPageContent(username, password, utils.TRANSCRIPTURL)
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(pageContent))
@@ -30,13 +32,11 @@ func GPAHandler(w http.ResponseWriter, r *http.Request) {
 	weightedGPA := foundContent[0].Value
 	unweightedGPA := foundContent[1].Value
 
-	responseObj := response{
+	response, _ := json.Marshal(utils.StudentGPAType{
 		WeightedGPA:   weightedGPA,
 		UnweightedGPA: unweightedGPA,
-	}
-
-	jsonResponse, _ := json.Marshal(responseObj)
+	})
 
 	w.Header().Add("Content-Type", "application/json")
-	fmt.Fprintf(w, string(jsonResponse))
+	fmt.Fprintf(w, string(response))
 }

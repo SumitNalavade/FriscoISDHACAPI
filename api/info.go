@@ -12,19 +12,17 @@ import (
 )
 
 func InfoHandler(w http.ResponseWriter, r *http.Request) {
-	type response struct {
-		Birthdate string `json:"birthdate"`
-		Campus    string `json:"campus"`
-		Counselor string `json:"counselor"`
-		Grade     string `json:"grade"`
-		ID        string `json:"id"`
-		Name      string `json:"name"`
-	}
-
 	queryParams := r.URL.Query()
 
 	username := queryParams.Get("username")
 	password := queryParams.Get("password")
+
+	if username == "john" && password == "doe" {
+		response, _ := json.Marshal(utils.FakeStudentInfo)
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, string(response))
+		return
+	}
 
 	pageContent := utils.GetPageContent(username, password, utils.REGISTRATIONURL)
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(pageContent))
@@ -38,17 +36,15 @@ func InfoHandler(w http.ResponseWriter, r *http.Request) {
 	studentID := foundContent[4].Value
 	studentName := foundContent[5].Value
 
-	responseObj := response{
+	response, _ := json.Marshal(utils.StudentInfoType{
 		Birthdate: studentBirthDate,
 		Campus:    studentCampus,
 		Counselor: studentCounselor,
 		Grade:     studentGrade,
 		ID:        studentID,
 		Name:      studentName,
-	}
-
-	jsonResponse, _ := json.Marshal(responseObj)
+	})
 
 	w.Header().Add("Content-Type", "application/json")
-	fmt.Fprintf(w, string(jsonResponse))
+	fmt.Fprintf(w, string(response))
 }
