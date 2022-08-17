@@ -8,22 +8,22 @@ import (
 )
 
 type predictionRequestCourse struct {
-	Name string `json:"name"`
-	Grade float32 `json:"grade"`
-	Weight float32 `json:"weight"`
-	Credits float32 `json:"credits"`
+	Name    string  `json:"name"`
+	Grade   float32 `json:"grade"`
+	Weight  float32 `json:"weight"`
+	Credits float32 `json:credits`
 }
 
 type predictionRequestBody struct {
-	WeightedGPA   float32 `json:"weightedGPA"`
-	UnweightedGPA float32 `json:"unweightedGPA"`
-	StudentGrade  int8     `json:"studentGrade"`
+	WeightedGPA    float32                   `json:"weightedGPA"`
+	UnweightedGPA  float32                   `json:"unweightedGPA"`
+	StudentGrade   int8                      `json:"studentGrade"`
 	CurrentClasses []predictionRequestCourse `json:"currentClasses"`
 }
 
 type predictionResponse struct {
 	UnweightedGPA float32 `json:"finalUnweightedGPA"`
-	WeightedGPA float32 `json:"finalWeightedGPA"`
+	WeightedGPA   float32 `json:"finalWeightedGPA"`
 }
 
 func predictGPA(currentWeightedGPA, currentUnweightedGPA float32, studentGrade int8, currentClasses []predictionRequestCourse) (float32, float32) {
@@ -34,8 +34,8 @@ func predictGPA(currentWeightedGPA, currentUnweightedGPA float32, studentGrade i
 	var unweightedGPAList []float32
 
 	var totalCredits float32
-	
-	var pastSemesters float32 = float32((studentGrade - 8) * 2) - 1
+
+	var pastSemesters float32 = float32((studentGrade-8)*2) - 1
 
 	for _, course := range currentClasses {
 		totalCredits += course.Credits
@@ -50,8 +50,8 @@ func predictGPA(currentWeightedGPA, currentUnweightedGPA float32, studentGrade i
 			weightedGPA = 3
 			unweightedGPA = 2
 		} else {
-			weightedGPA = ((course.Weight - ((100 - course.Grade)/10)) * course.Credits)
-			unweightedGPA = ((4.0 - ((90 - course.Grade)/10))* course.Credits)
+			weightedGPA = ((course.Weight - ((100 - course.Grade) / 10)) * course.Credits)
+			unweightedGPA = ((4.0 - ((90 - course.Grade) / 10)) * course.Credits)
 
 			if course.Credits == 2 && unweightedGPA > 8 {
 				unweightedGPA = 8.0
@@ -71,8 +71,8 @@ func predictGPA(currentWeightedGPA, currentUnweightedGPA float32, studentGrade i
 	finalWeightedGPA /= totalCredits
 	finalUnweightedGPA /= totalCredits
 
-	finalWeightedGPA = (((currentWeightedGPA) * pastSemesters) + finalWeightedGPA) / (pastSemesters+1)
-	finalUnweightedGPA = (((currentUnweightedGPA) * pastSemesters) + finalUnweightedGPA) / (pastSemesters+1)  
+	finalWeightedGPA = (((currentWeightedGPA) * pastSemesters) + finalWeightedGPA) / (pastSemesters + 1)
+	finalUnweightedGPA = (((currentUnweightedGPA) * pastSemesters) + finalUnweightedGPA) / (pastSemesters + 1)
 
 	return finalWeightedGPA, finalUnweightedGPA
 }
@@ -87,11 +87,11 @@ func PredictionHandler(w http.ResponseWriter, r *http.Request) {
 
 	responseObj := predictionResponse{
 		UnweightedGPA: unweightedGPA,
-		WeightedGPA: weightedGPA,
+		WeightedGPA:   weightedGPA,
 	}
 
-	response, _ := json.Marshal( responseObj )
+	response, _ := json.Marshal(responseObj)
 
-	w.Header().Add("Content-Type", "application/json") 
+	w.Header().Add("Content-Type", "application/json")
 	fmt.Fprintf(w, string(response))
 }

@@ -11,34 +11,25 @@ import (
 )
 
 func ScheduleHandler(w http.ResponseWriter, r *http.Request) {
-	type Course struct {
-		Building string `json:"building"`
-		Code string `json:"courseCode"`
-		Name string `json:"courseName"`
-		Days string `json:"days"`
-		MarkingPeriods string `json:"markingPeriods"`
-		Periods string `json:"periods"`
-		Room string `json:"room"`
-		Status string `json:"status"`
-		Teacher string `json:"teacher"`
-	}
-
-	type response struct {
-		Schedule []Course `json:"schedule"`
-	}
-	
-	var courses []Course
+	var courses []utils.StudentScheduleType
 
 	queryParams := r.URL.Query()
 
 	username := queryParams.Get("username")
 	password := queryParams.Get("password")
 	
+	if username == "john" && password == "doe" {
+		response, _ := json.Marshal(utils.FakeStudentSchedule)
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, string(response))
+		return
+	}
+
 	pageContent := utils.GetPageContent(username, password, utils.SCHEDULEURL)
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(pageContent))
 
 	doc.Find("tr.sg-asp-table-data-row").Each(func(i int, s *goquery.Selection) {
-		var newCourse Course
+		var newCourse utils.StudentScheduleType
 
 		s.Find("td").Each(func(i int, s *goquery.Selection) {
 			text := strings.TrimSpace(s.Text())
@@ -68,11 +59,7 @@ func ScheduleHandler(w http.ResponseWriter, r *http.Request) {
 		courses = append(courses, newCourse)
  	})
 
-	responseObj := response{
-		Schedule: courses,
-	}
-
-	jsonResponse, _ := json.Marshal( responseObj )
+	jsonResponse, _ := json.Marshal( courses )
 
 	w.Header().Add("Content-Type", "application/json") 
 	fmt.Fprintf(w, string(jsonResponse))
