@@ -18,9 +18,7 @@ func CurrentClassesHandler(w http.ResponseWriter, r *http.Request) {
 	password := queryParams.Get("password")
 
 	if username == "john" && password == "doe" {
-		response, _ := json.Marshal(map[string][]utils.StudentCourseType{
-			"currentClasses": utils.FakeStudentCurrentClasses,
-		})
+		response, _ := json.Marshal(utils.FakeStudentCurrentClasses)
 		w.Header().Add("Content-Type", "application/json")
 		fmt.Fprintf(w, string(response))
 		return

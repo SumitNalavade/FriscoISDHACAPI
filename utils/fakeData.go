@@ -206,7 +206,7 @@ var FakeStudentSchedule []StudentScheduleType = []StudentScheduleType{
 
 var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 	{
-		LastUpdated: "", 
+		LastUpdated: "",
 		Assignments: []StudentAssignmentType{  },
 		Credits: "1",
 		Grade: "98",
@@ -217,7 +217,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 		LastUpdated: "1/6/2022",
 		Assignments: []StudentAssignmentType{
 		  {
-			Assignment: "PA Script #3",
+			Name: "PA Script #3",
 			Category: "Minor Grades",
 			DateAssigned: "02/09/2022",
 			DateDue: "03/04/2022",
@@ -225,7 +225,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Social Media Posts",
+			Name: "Social Media Posts",
 			Category: "Minor Grades",
 			DateAssigned: "01/04/2022",
 			DateDue: "03/02/2022",
@@ -233,7 +233,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "MP3 Package/Segment #2",
+			Name: "MP3 Package/Segment #2",
 			Category: "Major Grades",
 			DateAssigned: "01/10/2022",
 			DateDue: "03/02/2022",
@@ -241,7 +241,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Event Coverage",
+			Name: "Event Coverage",
 			Category: "Major Grades",
 			DateAssigned: "01/04/2022",
 			DateDue: "02/25/2022",
@@ -249,7 +249,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "PA Script #2",
+			Name: "PA Script #2",
 			Category: "Minor Grades",
 			DateAssigned: "01/24/2022",
 			DateDue: "02/08/2022",
@@ -257,7 +257,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "MP3 Package/Segment #1",
+			Name: "MP3 Package/Segment #1",
 			Category: "Major Grades",
 			DateAssigned: "01/11/2022",
 			DateDue: "02/04/2022",
@@ -265,7 +265,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "PA Script #1",
+			Name: "PA Script #1",
 			Category: "Minor Grades",
 			DateAssigned: "01/04/2022",
 			DateDue: "01/21/2022",
@@ -273,7 +273,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "MP3 Calendar Check",
+			Name: "MP3 Calendar Check",
 			Category: "Non-graded",
 			DateAssigned: "01/04/2022",
 			DateDue: "01/06/2022",
@@ -290,7 +290,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 		LastUpdated: "1/13/2022",
 		Assignments: []StudentAssignmentType{
 		  {
-			Assignment: "Thesis Practice #1",
+			Name: "Thesis Practice #1",
 			Category: "Non-graded",
 			DateAssigned: "",
 			DateDue: "01/13/2022",
@@ -298,7 +298,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Christmas Carol Q3 Essay",
+			Name: "Christmas Carol Q3 Essay",
 			Category: "Minor Grades",
 			DateAssigned: "",
 			DateDue: "01/05/2022",
@@ -315,7 +315,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 		LastUpdated: "1/10/2022",
 		Assignments: []StudentAssignmentType{
 		  {
-			Assignment: "Unit 6 Test (Integration)",
+			Name: "Unit 6 Test (Integration)",
 			Category: "Major Grades",
 			DateAssigned: "",
 			DateDue: "02/08/2022",
@@ -323,7 +323,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Delta Math Practice (Unit 6)",
+			Name: "Delta Math Practice (Unit 6)",
 			Category: "Non-graded",
 			DateAssigned: "",
 			DateDue: "02/08/2022",
@@ -331,7 +331,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Quiz 4 (Antiderivatives and Rules of Integration)",
+			Name: "Quiz 4 (Antiderivatives and Rules of Integration)",
 			Category: "Minor Grades",
 			DateAssigned: "",
 			DateDue: "01/31/2022",
@@ -339,7 +339,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Quiz 3 (FTC and Definite Integrals)",
+			Name: "Quiz 3 (FTC and Definite Integrals)",
 			Category: "Minor Grades",
 			DateAssigned: "",
 			DateDue: "01/27/2022",
@@ -347,7 +347,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Quiz 2 (Properties of Def. Integrals)",
+			Name: "Quiz 2 (Properties of Def. Integrals)",
 			Category: "Minor Grades",
 			DateAssigned: "",
 			DateDue: "01/25/2022",
@@ -355,7 +355,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Quiz 1 (Reimann Sums and Definite Integrals)",
+			Name: "Quiz 1 (Reimann Sums and Definite Integrals)",
 			Category: "Minor Grades",
 			DateAssigned: "",
 			DateDue: "01/19/2022",
@@ -363,7 +363,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Unit 5 Test (Analytical Applications of Derivatives)",
+			Name: "Unit 5 Test (Analytical Applications of Derivatives)",
 			Category: "Major Grades",
 			DateAssigned: "",
 			DateDue: "01/10/2022",
@@ -371,7 +371,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Delta Math Practice (Unit 5)",
+			Name: "Delta Math Practice (Unit 5)",
 			Category: "Non-graded",
 			DateAssigned: "",
 			DateDue: "01/10/2022",
@@ -388,7 +388,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 		LastUpdated: "",
 		Assignments: []StudentAssignmentType{
 		  {
-			Assignment: "Test - 8 Confidence Intervals",
+			Name: "Test - 8 Confidence Intervals",
 			Category: "Major Grades",
 			DateAssigned: "",
 			DateDue: "01/26/2022",
@@ -396,7 +396,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Skills Check - 8 Confidence Intervals",
+			Name: "Skills Check - 8 Confidence Intervals",
 			Category: "Minor Grades",
 			DateAssigned: "",
 			DateDue: "01/24/2022",
@@ -404,7 +404,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Practice - 8.3 (canvas)",
+			Name: "Practice - 8.3 (canvas)",
 			Category: "Non-graded",
 			DateAssigned: "",
 			DateDue: "01/24/2022",
@@ -412,7 +412,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Practice - 8.2 (canvas)",
+			Name: "Practice - 8.2 (canvas)",
 			Category: "Non-graded",
 			DateAssigned: "",
 			DateDue: "01/24/2022",
@@ -420,7 +420,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Practice - 8.1 (canvas)",
+			Name: "Practice - 8.1 (canvas)",
 			Category: "Non-graded",
 			DateAssigned: "",
 			DateDue: "01/24/2022",
@@ -428,7 +428,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Group Skills Check - 7 Sampling Distributions",
+			Name: "Group Skills Check - 7 Sampling Distributions",
 			Category: "Minor Grades",
 			DateAssigned: "",
 			DateDue: "01/11/2022",
@@ -453,7 +453,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 		LastUpdated: "",
 		Assignments: []StudentAssignmentType{
 		  {
-			Assignment: "Midterm Exam (Units 1 & 2)",
+			Name: "Midterm Exam (Units 1 & 2)",
 			Category: "Major Grades",
 			DateAssigned: "",
 			DateDue: "02/23/2022",
@@ -461,7 +461,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Unit 2 Major Grade FRQ",
+			Name: "Unit 2 Major Grade FRQ",
 			Category: "Major Grades",
 			DateAssigned: "",
 			DateDue: "02/16/2022",
@@ -469,7 +469,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Unit 2 MC Quiz",
+			Name: "Unit 2 MC Quiz",
 			Category: "Minor Grades",
 			DateAssigned: "",
 			DateDue: "02/14/2022",
@@ -477,7 +477,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Unit 2 Argument FRQ Practice",
+			Name: "Unit 2 Argument FRQ Practice",
 			Category: "Minor Grades",
 			DateAssigned: "",
 			DateDue: "02/11/2022",
@@ -485,7 +485,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Unit 2 Congress FRQ Practice",
+			Name: "Unit 2 Congress FRQ Practice",
 			Category: "Minor Grades",
 			DateAssigned: "",
 			DateDue: "02/04/2022",
@@ -493,7 +493,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Unit 1 Major Grade FRQ",
+			Name: "Unit 1 Major Grade FRQ",
 			Category: "Major Grades",
 			DateAssigned: "",
 			DateDue: "01/21/2022",
@@ -501,7 +501,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Unit 1 MC Quiz",
+			Name: "Unit 1 MC Quiz",
 			Category: "Minor Grades",
 			DateAssigned: "",
 			DateDue: "01/21/2022",
@@ -509,7 +509,7 @@ var FakeStudentCurrentClasses []StudentCourseType = []StudentCourseType{
 			TotalPoints: "100.00",
 		  },
 		  {
-			Assignment: "Unit 1 Concept Application & Argument FRQ Practice",
+			Name: "Unit 1 Concept Application & Argument FRQ Practice",
 			Category: "Minor Grades",
 			DateAssigned: "",
 			DateDue: "01/14/2022",

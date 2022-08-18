@@ -11,10 +11,6 @@ import (
 )
 
 func ScheduleHandler(w http.ResponseWriter, r *http.Request) {
-	type scheduleResponse struct {
-		Schedule []utils.StudentScheduleType `json:"schedule"`
-	}
-	
 	var courses []utils.StudentScheduleType
 
 	queryParams := r.URL.Query()
@@ -23,12 +19,9 @@ func ScheduleHandler(w http.ResponseWriter, r *http.Request) {
 	password := queryParams.Get("password")
 	
 	if username == "john" && password == "doe" {
-		jsonResponse, _ := json.Marshal(scheduleResponse{
-			Schedule: utils.FakeStudentSchedule,
-		})
-	
+		response, _ := json.Marshal(utils.FakeStudentSchedule)
 		w.Header().Add("Content-Type", "application/json")
-		fmt.Fprintf(w, string(jsonResponse))
+		fmt.Fprintf(w, string(response))
 		return
 	}
 
@@ -66,9 +59,7 @@ func ScheduleHandler(w http.ResponseWriter, r *http.Request) {
 		courses = append(courses, newCourse)
  	})
 
-	jsonResponse, _ := json.Marshal(scheduleResponse{
-		Schedule: courses,
-	})
+	jsonResponse, _ := json.Marshal( courses )
 
 	w.Header().Add("Content-Type", "application/json") 
 	fmt.Fprintf(w, string(jsonResponse))

@@ -27,7 +27,7 @@ type StudentScheduleType struct {
 }
 
 type StudentAssignmentType struct {
-	Assignment string `json:"assignment"`
+	Name string `json:"name"`
 	Category string `json:"category"`
 	DateAssigned string `json:"dateAssigned"`
 	DateDue string `json:"dateDue"`
@@ -36,7 +36,7 @@ type StudentAssignmentType struct {
 }
 
 type StudentCourseType struct {
-	LastUpdated string `json:"Last Updated"`
+	LastUpdated string `json:"lastUpdated"`
 	Assignments []StudentAssignmentType `json:"assignments"`
 	Credits string `json:"credits"`
 	Grade string `json:"grade"`
