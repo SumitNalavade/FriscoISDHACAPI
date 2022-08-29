@@ -17,11 +17,11 @@ func ScheduleHandler(w http.ResponseWriter, r *http.Request) {
 
 	username := queryParams.Get("username")
 	password := queryParams.Get("password")
-	
+
 	if username == "john" && password == "doe" {
 		response, _ := json.Marshal(utils.FakeStudentSchedule)
 		w.Header().Add("Content-Type", "application/json")
-		fmt.Fprintf(w, string(response))
+		fmt.Fprint(w, string(response))
 		return
 	}
 
@@ -57,10 +57,10 @@ func ScheduleHandler(w http.ResponseWriter, r *http.Request) {
 		})
 
 		courses = append(courses, newCourse)
- 	})
+	})
 
-	jsonResponse, _ := json.Marshal( courses )
+	jsonResponse, _ := json.Marshal(courses)
 
-	w.Header().Add("Content-Type", "application/json") 
-	fmt.Fprintf(w, string(jsonResponse))
+	w.Header().Add("Content-Type", "application/json")
+	fmt.Fprint(w, string(jsonResponse))
 }

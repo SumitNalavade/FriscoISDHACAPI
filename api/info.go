@@ -20,7 +20,7 @@ func InfoHandler(w http.ResponseWriter, r *http.Request) {
 	if username == "john" && password == "doe" {
 		response, _ := json.Marshal(utils.FakeStudentInfo)
 		w.Header().Add("Content-Type", "application/json")
-		fmt.Fprintf(w, string(response))
+		fmt.Fprint(w, string(response))
 		return
 	}
 
@@ -46,5 +46,5 @@ func InfoHandler(w http.ResponseWriter, r *http.Request) {
 	})
 
 	w.Header().Add("Content-Type", "application/json")
-	fmt.Fprintf(w, string(response))
+	fmt.Fprint(w, string(response))
 }

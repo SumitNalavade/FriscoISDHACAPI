@@ -1,12 +1,12 @@
 package handler
 
 import (
-	"net/http"
 	"fmt"
+	"net/http"
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, `
+	fmt.Fprint(w, `
 		<h1>Frisco ISD HAC API</h1>
 		<p>Documentation:</p>
 		<a>https://fisdhacapi.netlify.app/</a>

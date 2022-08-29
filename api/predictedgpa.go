@@ -93,5 +93,5 @@ func PredictionHandler(w http.ResponseWriter, r *http.Request) {
 	response, _ := json.Marshal(responseObj)
 
 	w.Header().Add("Content-Type", "application/json")
-	fmt.Fprintf(w, string(response))
+	fmt.Fprint(w, string(response))
 }

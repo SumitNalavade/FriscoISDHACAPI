@@ -19,9 +19,9 @@ func PastAssignmentsHandler(w http.ResponseWriter, r *http.Request) {
 	apiURL := fmt.Sprintf("https://gradualgrades.herokuapp.com/students/pastassignments?username=%v&password=%v&quarter=%v", username, password, quarter)
 
 	apiResponse, _ := restyClient.R().
-			EnableTrace().
-			Get(apiURL)
+		EnableTrace().
+		Get(apiURL)
 
-	w.Header().Add("Content-Type", "application/json") 
-	fmt.Fprintf(w, apiResponse.String())
+	w.Header().Add("Content-Type", "application/json")
+	fmt.Fprint(w, apiResponse.String())
 }
