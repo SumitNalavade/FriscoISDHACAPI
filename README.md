@@ -24,7 +24,7 @@ The data below shows our results after 10 trials in each language (less is bette
 
 Average API response time for the ```/students/schedule``` route after 10 trials each.
 
-Data shows ✨ <b>~ 70.1965% increase</b> in loading times after rewriting API in Go (concurrent).
+Data shows ✨ <b>~ 70.1965% decrease </b> in loading times after rewriting API in Go (concurrent).
 
 ### Two sample ‘T’ test for significance
 
