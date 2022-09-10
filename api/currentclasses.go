@@ -59,8 +59,26 @@ func CurrentClassesHandler(w http.ResponseWriter, r *http.Request) {
 			newCourse.Assignments = append(newCourse.Assignments, newAssignment)
 		})
 
+		if strings.Contains(strings.ToLower(newCourse.Name), "ap") {
+			newCourse.Weight = "6"
+		} else if(strings.Contains(strings.ToLower(newCourse.Name), "ism") || strings.Contains(strings.ToLower(newCourse.Name), "academic dec") || strings.Contains(strings.ToLower(newCourse.Name), "adv")) {
+			newCourse.Weight = "5.5"
+		} else {
+			newCourse.Weight = "5"
+		}
+
+		newCourse.Credits = "1"
+		for _, courseName := range utils.DoubleWeighted {
+			if (strings.Contains(strings.ToLower(newCourse.Name), courseName)) {
+				newCourse.Credits = "2"
+			}
+		}
+
 		courses = append(courses, newCourse)
 	})
 
-	fmt.Fprintf(w, "success")
+	response, _ := json.Marshal(courses)
+	
+	w.Header().Add("Content-Type", "application/json") 
+	fmt.Fprint(w, string(response))
 }
