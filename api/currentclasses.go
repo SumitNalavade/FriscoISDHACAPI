@@ -1,7 +1,7 @@
 package handler
 
 import (
-	// "encoding/json"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -19,6 +19,13 @@ func CurrentClassesHandler(w http.ResponseWriter, r *http.Request) {
 	username := queryParams.Get("username")
 	password := queryParams.Get("password")
 
+	if username == "john" && password == "doe" {
+		response, _ := json.Marshal(utils.FakeStudentCurrentClasses)
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, string(response))
+		return
+	}
+	
 	pageContent := utils.GetPageContent(username, password, utils.CLASSESURL)
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(pageContent))
 

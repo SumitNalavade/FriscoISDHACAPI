@@ -56,7 +56,7 @@ func ScheduleHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		})
 
-		courses = append(courses, newCourse)
+		courses = append(courses, newCourse)  
  	})
 
 	jsonResponse, _ := json.Marshal( courses )
