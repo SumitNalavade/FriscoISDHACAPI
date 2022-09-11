@@ -19,6 +19,13 @@ func PastClassesHandler(w http.ResponseWriter, r *http.Request) {
 	password := queryParams.Get("password")
 	quarter := queryParams.Get("quarter")
 
+	if username == "john" && password == "doe" {
+		response, _ := json.Marshal(utils.FakeStudentCurrentClasses)
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, string(response))
+		return
+	}
+
 	pageContent := utils.GetPastClassesContent(username, password, quarter)
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(pageContent))
 
