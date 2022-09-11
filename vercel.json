@@ -21,8 +21,8 @@
             "dest": "/api/currentclasses.go"
         },
         {
-            "src": "/students/pastassignments",
-            "dest": "/api/pastassignments.go"
+            "src": "/students/pastclasses",
+            "dest": "/api/pastclasses.go"
         },
         {
             "src": "/students/predictedGPA",

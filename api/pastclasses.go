@@ -10,7 +10,7 @@ import (
 	"github.com/SumitNalavade/FRISCOISDHACAPIV2/utils"
 )
 
-func PastAssignmentsHandler(w http.ResponseWriter, r *http.Request) {
+func PastClassesHandler(w http.ResponseWriter, r *http.Request) {
 	var courses []utils.StudentCourseType
 
 	queryParams := r.URL.Query()
@@ -19,7 +19,7 @@ func PastAssignmentsHandler(w http.ResponseWriter, r *http.Request) {
 	password := queryParams.Get("password")
 	quarter := queryParams.Get("quarter")
 
-	pageContent := utils.GetPastAssignmentsContent(username, password, quarter)
+	pageContent := utils.GetPastClassesContent(username, password, quarter)
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(pageContent))
 
 	doc.Find(".AssignmentClass").Each(func(i int, s *goquery.Selection) {
@@ -54,7 +54,7 @@ func PastAssignmentsHandler(w http.ResponseWriter, r *http.Request) {
 
 		if strings.Contains(strings.ToLower(newCourse.Name), "ap") {
 			newCourse.Weight = "6"
-		} else if(strings.Contains(strings.ToLower(newCourse.Name), "ism") || strings.Contains(strings.ToLower(newCourse.Name), "academic dec") || strings.Contains(strings.ToLower(newCourse.Name), "adv")) {
+		} else if strings.Contains(strings.ToLower(newCourse.Name), "ism") || strings.Contains(strings.ToLower(newCourse.Name), "academic dec") || strings.Contains(strings.ToLower(newCourse.Name), "adv") {
 			newCourse.Weight = "5.5"
 		} else {
 			newCourse.Weight = "5"
@@ -62,7 +62,7 @@ func PastAssignmentsHandler(w http.ResponseWriter, r *http.Request) {
 
 		newCourse.Credits = "1"
 		for _, courseName := range utils.DoubleWeighted {
-			if (strings.Contains(strings.ToLower(newCourse.Name), courseName)) {
+			if strings.Contains(strings.ToLower(newCourse.Name), courseName) {
 				newCourse.Credits = "2"
 			}
 		}
@@ -71,7 +71,7 @@ func PastAssignmentsHandler(w http.ResponseWriter, r *http.Request) {
 	})
 
 	response, _ := json.Marshal(courses)
-	
-	w.Header().Add("Content-Type", "application/json") 
+
+	w.Header().Add("Content-Type", "application/json")
 	fmt.Fprint(w, string(response))
 }

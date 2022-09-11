@@ -55,4 +55,5 @@ func GetPageContent(username, password, url string) string {
 		EnableTrace().Get(url)
 	
 	return finalResponse.String()
+		
 }
