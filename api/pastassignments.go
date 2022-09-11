@@ -1,14 +1,17 @@
 package handler
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
-	"github.com/go-resty/resty/v2"
+	"github.com/PuerkitoBio/goquery"
+	"github.com/SumitNalavade/FRISCOISDHACAPIV2/utils"
 )
 
 func PastAssignmentsHandler(w http.ResponseWriter, r *http.Request) {
-	var restyClient = resty.New()
+	var courses []utils.StudentCourseType
 
 	queryParams := r.URL.Query()
 
@@ -16,12 +19,59 @@ func PastAssignmentsHandler(w http.ResponseWriter, r *http.Request) {
 	password := queryParams.Get("password")
 	quarter := queryParams.Get("quarter")
 
-	apiURL := fmt.Sprintf("https://gradualgrades.herokuapp.com/students/pastassignments?username=%v&password=%v&quarter=%v", username, password, quarter)
+	pageContent := utils.GetPastAssignmentsContent(username, password, quarter)
+	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(pageContent))
 
-	apiResponse, _ := restyClient.R().
-		EnableTrace().
-		Get(apiURL)
+	doc.Find(".AssignmentClass").Each(func(i int, s *goquery.Selection) {
+		var newCourse utils.StudentCourseType
 
-	w.Header().Add("Content-Type", "application/json")
-	fmt.Fprint(w, apiResponse.String())
+		newCourse.Name = strings.TrimSpace(s.Find("a.sg-header-heading").Text())
+		newCourse.Grade = strings.TrimSpace(s.Find("span.sg-header-heading").Text())
+		newCourse.LastUpdated = strings.Replace(strings.Replace(strings.TrimSpace(s.Find(".sg-header-sub-heading").Text()), "(Last Updated: ", "", 1), ")", "", 1)
+
+		s.Find(".sg-asp-table-data-row").Each(func(i int, s *goquery.Selection) {
+			var newAssignment utils.StudentAssignmentType
+
+			s.Find("td").Each(func(i int, s *goquery.Selection) {
+				text := strings.TrimSpace(s.Text())
+				switch i {
+				case 0:
+					newAssignment.DateDue = text
+				case 1:
+					newAssignment.DateAssigned = text
+				case 2:
+					newAssignment.Name = strings.TrimSpace(strings.Replace(text, "*", "", 1))
+				case 3:
+					newAssignment.Category = text
+				case 4:
+					newAssignment.Score = text
+				case 5:
+					newAssignment.TotalPoints = text
+				}
+			})
+			newCourse.Assignments = append(newCourse.Assignments, newAssignment)
+		})
+
+		if strings.Contains(strings.ToLower(newCourse.Name), "ap") {
+			newCourse.Weight = "6"
+		} else if(strings.Contains(strings.ToLower(newCourse.Name), "ism") || strings.Contains(strings.ToLower(newCourse.Name), "academic dec") || strings.Contains(strings.ToLower(newCourse.Name), "adv")) {
+			newCourse.Weight = "5.5"
+		} else {
+			newCourse.Weight = "5"
+		}
+
+		newCourse.Credits = "1"
+		for _, courseName := range utils.DoubleWeighted {
+			if (strings.Contains(strings.ToLower(newCourse.Name), courseName)) {
+				newCourse.Credits = "2"
+			}
+		}
+
+		courses = append(courses, newCourse)
+	})
+
+	response, _ := json.Marshal(courses)
+	
+	w.Header().Add("Content-Type", "application/json") 
+	fmt.Fprint(w, string(response))
 }
