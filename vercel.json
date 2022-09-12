@@ -5,28 +5,24 @@
             "dest": "/api/home.go"
         },
         {
-            "src": "/students/gpa",
+            "src": "/gpa",
             "dest": "/api/gpa.go"
         },
         {
-            "src": "/students/info",
+            "src": "/info",
             "dest": "/api/info.go"
         },
         {
-            "src": "/students/schedule",
+            "src": "/schedule",
             "dest": "/api/schedule.go"
         },
         {
-            "src": "/students/currentclasses",
+            "src": "/currentclasses",
             "dest": "/api/currentclasses.go"
         },
         {
-            "src": "/students/pastclasses",
+            "src": "/pastclasses",
             "dest": "/api/pastclasses.go"
-        },
-        {
-            "src": "/students/predictedGPA",
-            "dest": "/api/predictedgpa.go"
         },
         {
             "src": "/predictedGPA",
