@@ -9,7 +9,7 @@ interface Props {
 
 const Layout: React.FC<Props> = ({ children }) => {
   return (
-    <div className="bg-background flex flex-col h-full">
+    <div className="bg-background flex flex-col h-full text-paragraph">
       <Navbar />
 
       {children}
