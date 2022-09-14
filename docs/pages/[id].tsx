@@ -15,7 +15,7 @@ const Route: React.FC<Props> = ({ route }) => {
     <Layout>
       <div className="grid grid-cols-5 h-full">
         <Drawer />
-        <div className="bg-tertiary col-span-4">{route.title}</div>
+        <div className="col-span-4">{route.title}</div>
       </div>
     </Layout>
   );

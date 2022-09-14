@@ -1,8 +1,18 @@
 import React from "react";
+import Link from "next/link";
 
 import { Sidenav, Nav } from "rsuite";
 
 import apiRoutes from "../../utils/apiRoutes";
+
+// @ts-ignore
+const NavLink = React.forwardRef(({ href, as, ...rest }, ref) => (
+  <Link href={href} as={as}>
+    {/* @ts-ignore */}
+    <a ref={ref} {...rest} />
+  </Link>
+));
+NavLink.displayName = "NavLink"
 
 const Drawer: React.FC = () => {
     return (
@@ -10,7 +20,11 @@ const Drawer: React.FC = () => {
           <Sidenav.Body>
             <Nav activeKey="1">
               <Nav.Menu eventKey="3" title="API Routes">
-                {apiRoutes.map((apiRoute, index) => <Nav.Item key={index} eventKey={`0-${index}`}>[{apiRoute.type}] {apiRoute.title}</Nav.Item>)}
+                {apiRoutes.map((apiRoute, index) => (
+                    <Nav.Item as={NavLink} href={`/${apiRoute.id}`} key={index} eventKey={`0-${index}`}> 
+                      <span className={`font-bold ${ apiRoute.type === "GET" ? "text-highlight" : "text-tertiary" }`}>[{apiRoute.type}]</span> <span>{apiRoute.title}</span>
+                    </Nav.Item>
+                ))}
               </Nav.Menu>
             </Nav>
           </Sidenav.Body>
