@@ -9,10 +9,8 @@ module.exports = {
       colors: {
         "background" : "#fffffe",
         "headline" : "#094067",
-        "headline-darker": "#60aedb",
         "paragraph" : "#5f6c7b",
         "button" : "#3da9fc",
-        "button-text": "#fffffe",
         "stroke" : "#094067",
         "main" : "#fffffe",
         "highlight" : "#3da9fc",

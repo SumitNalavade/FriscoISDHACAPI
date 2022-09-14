@@ -3,8 +3,8 @@ import React from "react";
 const Navbar: React.FC = () => {
     return (
         <div className="bg-secondary text-headline py-3">
-            <div className="container mx-auto flex justify-between">
-                <span className="text-lg font-bold">Frisco ISD HAC API</span>
+            <div className="container mx-auto px-4 flex justify-between">
+                <span className="text-md font-bold">Frisco ISD HAC API</span>
          
                 <span className="flex justify-center items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-github" viewBox="0 0 16 16">

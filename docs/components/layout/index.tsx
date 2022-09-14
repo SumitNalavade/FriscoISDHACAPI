@@ -9,12 +9,10 @@ interface Props {
 
 const Layout: React.FC<Props> = ({ children }) => {
   return (
-    <div className="bg-background flex flex-col justify-between h-full">
+    <div className="bg-background flex flex-col h-full">
       <Navbar />
 
       {children}
-
-      <Footer />
     </div>
   );
 };

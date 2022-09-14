@@ -7,6 +7,7 @@ interface IQueryParameter {
 
 export default interface IAPIRoute {
     type: "GET" | "POST"
+    id: string
     title: string
     description: string
     queryParameters: IQueryParameter[]
