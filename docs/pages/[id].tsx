@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { CopyBlock, solarizedLight } from "react-code-blocks";
 
@@ -15,9 +15,9 @@ interface Props {
 const Route: React.FC<Props> = ({ route }) => {
   return (
     <Layout>
-      <div className="grid grid-cols-5 h-full">
+      <div className="lg:grid lg:grid-cols-5 h-full">
         <Drawer />
-        <div className="col-span-4 p-8">
+        <div className="lg:col-span-4 p-8">
           <h2 className="text-4xl text-headline font-bold"><span className={`${ route.type === "GET" ? "text-highlight" : "text-tertiary" }`}>[{route.type}]</span> {route.title}</h2>
           <p className="text-lg py-4" >{route.description}</p>
 
@@ -30,6 +30,27 @@ const Route: React.FC<Props> = ({ route }) => {
             codeBlock
           />
 
+        <h3 className="text-2xl font-bold mt-10 text-headline">Query Parameters</h3>
+        <table className="table-fixed my-4 text-center">
+          <thead>
+            <tr className="bg-slate-100">
+              <th className="p-4 border">Parameter</th>
+              <th className="p-4 border">Type</th>
+              <th className="p-4 border">Description</th>
+              <th className="p-4 border">Required</th>
+            </tr>
+          </thead>
+          <tbody>
+            {route.queryParameters.map((queryParameter, index) => (
+              <tr key={index}>
+                <td className="p-4 border"><input type="text" className="text-center border rounded-md p-2" placeholder={queryParameter.title} /></td>
+                <td className="p-4 border">{queryParameter.type}</td>
+                <td className="p-4 border">{queryParameter.description}</td>
+                <td className="p-4 border">{String(queryParameter.required).toUpperCase()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
         </div>
       </div>
     </Layout>
