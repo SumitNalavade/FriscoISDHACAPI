@@ -13,6 +13,18 @@ interface Props {
 }
 
 const Route: React.FC<Props> = ({ route }) => {
+  const [testQueryParameters, setTestQueryParameters] = useState({})
+
+  const handleTestQueryParameterChange = (parameterName: string, value: string) => {
+    const testQueryParmeters = { ...testQueryParameters }
+    //@ts-ignore
+    testQueryParameters[parameterName] = value
+    
+    setTestQueryParameters(testQueryParameters)
+  }
+
+  const url = route.queryParameters.reduce((previousValue, currentValue) => previousValue + `${currentValue.title}={${currentValue.title}}&`, `${route.type} /api/${route.id}?`).slice(0, -1)
+
   return (
     <Layout>
       <div className="lg:grid lg:grid-cols-5 h-full">
@@ -23,7 +35,7 @@ const Route: React.FC<Props> = ({ route }) => {
 
           <CopyBlock
             language="javascript"
-            text="GET /students/pastassignments?username={username}&password={password}&quarter={quarter}"
+            text={url}
             showLineNumbers={false}
             theme={solarizedLight}
             wrapLines={true}
@@ -43,7 +55,9 @@ const Route: React.FC<Props> = ({ route }) => {
           <tbody>
             {route.queryParameters.map((queryParameter, index) => (
               <tr key={index}>
-                <td className="p-4 border"><input type="text" className="text-center border rounded-md p-2" placeholder={queryParameter.title} /></td>
+                <td className="p-4 border">
+                  <input type="text" className="text-center border rounded-md p-2" placeholder={queryParameter.title} onChange={(e) => handleTestQueryParameterChange(queryParameter.title, e.target.value)}  />
+                </td>
                 <td className="p-4 border">{queryParameter.type}</td>
                 <td className="p-4 border">{queryParameter.description}</td>
                 <td className="p-4 border">{String(queryParameter.required).toUpperCase()}</td>
