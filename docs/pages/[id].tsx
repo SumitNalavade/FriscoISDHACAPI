@@ -15,15 +15,19 @@ interface Props {
 const Route: React.FC<Props> = ({ route }) => {
   const [testQueryParameters, setTestQueryParameters] = useState({})
 
+  let responseData = route.exampleResponse;
+
+  const url = route.queryParameters.reduce((previousValue, currentValue) => previousValue + `${currentValue.title}={${currentValue.title}}&`, `${route.type} /api/${route.id}?`).slice(0, -1)
+
   const handleTestQueryParameterChange = (parameterName: string, value: string) => {
     const testQueryParmeters = { ...testQueryParameters }
+    
     //@ts-ignore
     testQueryParameters[parameterName] = value
     
     setTestQueryParameters(testQueryParameters)
   }
 
-  const url = route.queryParameters.reduce((previousValue, currentValue) => previousValue + `${currentValue.title}={${currentValue.title}}&`, `${route.type} /api/${route.id}?`).slice(0, -1)
 
   return (
     <Layout>
@@ -43,7 +47,7 @@ const Route: React.FC<Props> = ({ route }) => {
           />
 
         <h3 className="text-2xl font-bold mt-10 text-headline">Query Parameters</h3>
-        <table className="table-fixed my-4 text-center">
+        <table className="table-fixed mt-4 mb-2 text-center">
           <thead>
             <tr className="bg-slate-100">
               <th className="p-4 border">Parameter</th>
@@ -65,6 +69,17 @@ const Route: React.FC<Props> = ({ route }) => {
             ))}
           </tbody>
         </table>
+        <button className="bg-tertiary text-main font-bold py-2 px-6 rounded-md">Send Request</button>
+
+        <h3 className="text-2xl font-bold mt-10 mb-4 text-headline">Response</h3>
+        <CopyBlock
+            language="javascript"
+            text={responseData}
+            showLineNumbers={false}
+            theme={solarizedLight}
+            wrapLines={true}
+            codeBlock
+        />
         </div>
       </div>
     </Layout>
