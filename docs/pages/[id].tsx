@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import {useRouter} from 'next/router'
 import axios from "axios";
 
 import { CopyBlock, solarizedLight } from "react-code-blocks";
@@ -14,9 +15,16 @@ interface Props {
 }
 
 const Route: React.FC<Props> = ({ route }) => {
+  const dynamicRoute = useRouter().asPath
   const [testQueryParameters, setTestQueryParameters] = useState({})
+  const [responseData, setResponseData] = useState(route.exampleResponse)
 
-  let responseData = route.exampleResponse;
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    setResponseData(route.exampleResponse)
+  }, [dynamicRoute])
 
   const baseUrl = route.queryParameters.reduce((previousValue, currentValue) => previousValue + `${currentValue.title}={${currentValue.title}}&`, `${route.type} /api/${route.id}?`).slice(0, -1)
 
@@ -29,7 +37,9 @@ const Route: React.FC<Props> = ({ route }) => {
     setTestQueryParameters(testQueryParameters)
   }
 
-  const sendRequest = () => {
+  const sendRequest = async() => {
+    setIsLoading(true);
+
     let url = baseUrl
 
     Object.keys(testQueryParameters).forEach((key) => {
@@ -37,10 +47,11 @@ const Route: React.FC<Props> = ({ route }) => {
      url = url.replace(`{${key}}`, testQueryParameters[key]).replace(`${route.type} `, "https://friscoisdhacapi.vercel.app");
     })
 
-    axios({
-      method: route.type,
-      url
-    }).then((res) => console.log(res));
+    const response = await axios.get(url).catch((err) => setIsError(true));
+
+    // @ts-ignore
+    setResponseData(JSON.stringify(response.data, null, 2))
+    setIsLoading(false);
   }
 
   return (
@@ -88,7 +99,7 @@ const Route: React.FC<Props> = ({ route }) => {
         <h3 className="text-2xl font-bold mt-10 mb-4 text-headline">Response</h3>
         <CopyBlock
             language="javascript"
-            text={responseData}
+            text={isLoading ? "Loading..." : isError ? "Error" : responseData}
             showLineNumbers={false}
             theme={solarizedLight}
             wrapLines={true}
