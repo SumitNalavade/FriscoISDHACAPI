@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 import { CopyBlock, solarizedLight } from "react-code-blocks";
 
@@ -17,7 +18,7 @@ const Route: React.FC<Props> = ({ route }) => {
 
   let responseData = route.exampleResponse;
 
-  const url = route.queryParameters.reduce((previousValue, currentValue) => previousValue + `${currentValue.title}={${currentValue.title}}&`, `${route.type} /api/${route.id}?`).slice(0, -1)
+  const baseUrl = route.queryParameters.reduce((previousValue, currentValue) => previousValue + `${currentValue.title}={${currentValue.title}}&`, `${route.type} /api/${route.id}?`).slice(0, -1)
 
   const handleTestQueryParameterChange = (parameterName: string, value: string) => {
     const testQueryParmeters = { ...testQueryParameters }
@@ -28,6 +29,19 @@ const Route: React.FC<Props> = ({ route }) => {
     setTestQueryParameters(testQueryParameters)
   }
 
+  const sendRequest = () => {
+    let url = baseUrl
+
+    Object.keys(testQueryParameters).forEach((key) => {
+      //@ts-ignore
+     url = url.replace(`{${key}}`, testQueryParameters[key]).replace(`${route.type} `, "https://friscoisdhacapi.vercel.app");
+    })
+
+    axios({
+      method: route.type,
+      url
+    }).then((res) => console.log(res));
+  }
 
   return (
     <Layout>
@@ -39,7 +53,7 @@ const Route: React.FC<Props> = ({ route }) => {
 
           <CopyBlock
             language="javascript"
-            text={url}
+            text={baseUrl}
             showLineNumbers={false}
             theme={solarizedLight}
             wrapLines={true}
@@ -69,7 +83,7 @@ const Route: React.FC<Props> = ({ route }) => {
             ))}
           </tbody>
         </table>
-        <button className="bg-tertiary text-main font-bold py-2 px-6 rounded-md">Send Request</button>
+        <button onClick={sendRequest} className="bg-tertiary text-main font-bold py-2 px-6 rounded-md">Send Request</button>
 
         <h3 className="text-2xl font-bold mt-10 mb-4 text-headline">Response</h3>
         <CopyBlock
