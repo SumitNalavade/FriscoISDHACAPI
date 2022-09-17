@@ -1,34 +1,4 @@
 {
-    "routes": [
-        {
-            "src": "/",
-            "dest": "/api/home.go"
-        },
-        {
-            "src": "/gpa",
-            "dest": "/api/gpa.go"
-        },
-        {
-            "src": "/info",
-            "dest": "/api/info.go"
-        },
-        {
-            "src": "/schedule",
-            "dest": "/api/schedule.go"
-        },
-        {
-            "src": "/currentclasses",
-            "dest": "/api/currentclasses.go"
-        },
-        {
-            "src": "/pastclasses",
-            "dest": "/api/pastclasses.go"
-        },
-        {
-            "src": "/predictedGPA",
-            "dest": "/api/predictedgpa.go"
-        }
-    ],
     "headers": [
         {
           "source": "/",
