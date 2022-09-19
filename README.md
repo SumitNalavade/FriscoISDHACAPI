@@ -2,9 +2,8 @@
 REST API to access student info from the Frisco ISD Home Access Center
 
 # API Documentation
-~~~
 https://friscoisdhacapidocs.vercel.app/
-~~~
+
 
 ## Python vs Golang API Loading Time ⏳
 
