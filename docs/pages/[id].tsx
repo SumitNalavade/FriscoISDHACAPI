@@ -59,7 +59,7 @@ const Route: React.FC<Props> = ({ route }) => {
       <div className="lg:grid lg:grid-cols-5 h-full">
         <Drawer />
         <div className="lg:col-span-4 p-8">
-          <h2 className="text-4xl text-headline font-bold"><span className={`${ route.type === "GET" ? "text-highlight" : "text-tertiary" }`}>[{route.type}]</span> {route.title}</h2>
+          <h2 className="text-4xl text-headline font-bold"><span className="text-highlight">[{route.type}]</span> {route.title}</h2>
           <p className="text-lg py-4" >{route.description}</p>
 
           <CopyBlock
