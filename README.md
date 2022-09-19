@@ -1,6 +1,10 @@
-# FriscoISDHACAPI
+# Frisco ISD HAC API
+REST API to access student info from the Frisco ISD Home Access Center
 
-API DOCUMENTATION: https://fisdhacapi.netlify.app/
+# API Documentation
+~~~
+https://friscoisdhacapidocs.vercel.app/
+~~~
 
 ## Python vs Golang API Loading Time ⏳
 
@@ -37,3 +41,15 @@ $a = 0.05$
 $p = 0.0394$
 
 Because the $p$ value, 0.0394 is less than our $a=0.05$, we <b>reject the null hypothesis</b>, there is a significant difference in API response time when rewriting the API in Go.
+
+## Contributing  
+
+Contributions are always welcome!  
+
+See `contributing.md` for ways to get started.  
+
+Please adhere to this project's `code of conduct`.  
+
+## License  
+
+[MIT](https://choosealicense.com/licenses/mit/)
