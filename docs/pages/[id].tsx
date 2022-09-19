@@ -16,7 +16,7 @@ interface Props {
 
 const Route: React.FC<Props> = ({ route }) => {
   const dynamicRoute = useRouter().asPath
-  const [testQueryParameters, setTestQueryParameters] = useState({})
+  const [testQueryParameters, setTestQueryParameters] = useState<{ username: string, password: string }>({ username: "", password: "" })
   const [responseData, setResponseData] = useState(route.exampleResponse)
 
   const [isLoading, setIsLoading] = useState(false);
@@ -38,6 +38,8 @@ const Route: React.FC<Props> = ({ route }) => {
   }
 
   const sendRequest = async() => {
+    if(testQueryParameters.username === "" || testQueryParameters.password === "") return
+
     setIsLoading(true);
 
     let url = baseUrl
@@ -94,7 +96,7 @@ const Route: React.FC<Props> = ({ route }) => {
             ))}
           </tbody>
         </table>
-        <button onClick={sendRequest} className="bg-tertiary text-main font-bold py-2 px-6 rounded-md">Send Request</button>
+        <button onClick={sendRequest} className="bg-tertiary text-main font-bold py-2 px-6 rounded-md active:bg-rose-600">Send Request</button>
 
         <h3 className="text-2xl font-bold mt-10 mb-4 text-headline">Response</h3>
         <CopyBlock

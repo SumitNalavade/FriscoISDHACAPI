@@ -12,7 +12,7 @@ const Home: NextPage = () => {
           <h1 className='text-7xl font-bold text-headline text-center'>Frisco ISD HAC API</h1>
           <h2 className='text-paragraph text-center'>REST API to retrieve data from HAC (Home Access Center)</h2>
 
-          <Link href="/info"><button className='bg-highlight text-main py-2 px-14 mt-8 rounded-md hover:bg-headline-darker' >Get Started</button></Link>
+          <Link href="/info"><button className='bg-highlight text-main py-2 px-14 mt-8 rounded-md active:bg-sky-600'>Get Started</button></Link>
         </div>
         <Footer />
       </div>
