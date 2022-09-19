@@ -56,7 +56,7 @@ const Home: React.FC = () => {
                     <p>If you have any feedback, please reach out to me at vs.nalavade2003@gmail.com</p>
 
                     <h3 className="text-2xl font-bold mt-10 my-2 text-headline">Feedback</h3>
-                    [MIT]
+                    [MIT] https://github.com/SumitNalavade/FriscoISDHACAPI/blob/master/License
                 </div>
             </div>
         </Layout>
