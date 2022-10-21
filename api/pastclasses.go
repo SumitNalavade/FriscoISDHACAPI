@@ -79,6 +79,12 @@ func PastClassesHandler(w http.ResponseWriter, r *http.Request) {
 
 	response, _ := json.Marshal(courses)
 
+	if(string(response) == "null") {
+		w.WriteHeader(http.StatusUnauthorized)
+		fmt.Fprint(w, "Something went wrong!")
+		return
+	}
+
 	w.Header().Add("Content-Type", "application/json")
 	fmt.Fprint(w, string(response))
 }

@@ -29,6 +29,14 @@ func InfoHandler(w http.ResponseWriter, r *http.Request) {
 
 	foundContent := utils.FindContentFromDoc(doc, "#plnMain_lblBirthDate", "#plnMain_lblBuildingName", "#plnMain_lblCounselor", "#plnMain_lblGrade", "#plnMain_lblRegStudentID", "#plnMain_lblRegStudentName")
 
+	for _, content := range foundContent {
+        if content.Value == "" {
+			w.WriteHeader(http.StatusUnauthorized)
+			fmt.Fprint(w, "Something went wrong!")
+			return
+		}
+    }
+
 	studentBirthDate := foundContent[0].Value
 	studentCampus := foundContent[1].Value
 	studentCounselor := foundContent[2].Value

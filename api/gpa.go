@@ -29,6 +29,14 @@ func GPAHandler(w http.ResponseWriter, r *http.Request) {
 
 	foundContent := utils.FindContentFromDoc(doc, "#plnMain_rpTranscriptGroup_lblGPACum1", "#plnMain_rpTranscriptGroup_lblGPACum2")
 
+	for _, content := range foundContent {
+        if content.Value == "" {
+			w.WriteHeader(http.StatusUnauthorized)
+			fmt.Fprint(w, "Something went wrong!")
+			return
+		}
+    }
+
 	weightedGPA := foundContent[0].Value
 	unweightedGPA := foundContent[1].Value
 
