@@ -38,9 +38,10 @@ const Route: React.FC<Props> = ({ route }) => {
   }
 
   const sendRequest = async() => {
-    if(testQueryParameters.username === "" || testQueryParameters.password === "") return
-
     setIsLoading(true);
+    setIsError(false);
+
+    if(testQueryParameters.username === "" || testQueryParameters.password === "") return
 
     let url = baseUrl
 
@@ -51,8 +52,11 @@ const Route: React.FC<Props> = ({ route }) => {
 
     const response = await axios.get(url).catch((err) => setIsError(true));
 
-    // @ts-ignore
-    setResponseData(JSON.stringify(response.data, null, 2))
+    if (response) {
+      // @ts-ignore
+      setResponseData(JSON.stringify(response.data, null, 2))
+    }
+
     setIsLoading(false);
   }
 
@@ -98,15 +102,20 @@ const Route: React.FC<Props> = ({ route }) => {
         </table>
         <button onClick={sendRequest} className="bg-tertiary text-main font-bold py-2 px-6 rounded-md active:bg-rose-600">Send Request</button>
 
-        <h3 className="text-2xl font-bold mt-10 mb-4 text-headline">Response</h3>
+        <h3 className="text-2xl font-bold mt-10 mb-4 text-headline">Response</h3>      
+        
         <CopyBlock
-            language="javascript"
-            text={isLoading ? "Loading..." : isError ? "Error" : responseData}
-            showLineNumbers={false}
-            theme={solarizedLight}
-            wrapLines={true}
-            codeBlock
-        />
+                language="javascript"
+                text={isLoading ? "Loading..." : isError ? "Error" : responseData}
+                showLineNumbers={false}
+                theme={solarizedLight}
+                wrapLines={true}
+                codeBlock
+              />  
+
+        <div className="py-4">
+          { isLoading ? (<img src="https://http.cat/102" />) : isError ? (<img src="https://http.cat/401" />) : (<img src="https://http.cat/200" />) }
+        </div>     
         </div>
       </div>
     </Layout>
