@@ -43,3 +43,4 @@ type StudentCourseType struct {
 	Name string `json:"name"`
 	Weight string `json:"weight"`
 }
+

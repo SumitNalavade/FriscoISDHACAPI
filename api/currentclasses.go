@@ -77,7 +77,13 @@ func CurrentClassesHandler(w http.ResponseWriter, r *http.Request) {
 		courses = append(courses, newCourse)
 	})
 
-	response, _ := json.Marshal(courses)
+
+	type CurrentClassesResponse struct {
+		CurrentClasses []utils.StudentCourseType `json:"currentClasses"`
+	}
+	response, _ := json.Marshal(CurrentClassesResponse{
+		CurrentClasses: courses,
+	})
 
 	if(string(response) == "null") {
 		w.WriteHeader(http.StatusUnauthorized)
