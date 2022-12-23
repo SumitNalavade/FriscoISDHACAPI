@@ -111,11 +111,7 @@ const Route: React.FC<Props> = ({ route }) => {
                 theme={solarizedLight}
                 wrapLines={true}
                 codeBlock
-              />  
-
-        <div className="py-4">
-          { isLoading ? (<img src="https://http.cat/102" />) : isError ? (<img src="https://http.cat/401" />) : (<img src="https://http.cat/200" />) }
-        </div>     
+              />     
         </div>
       </div>
     </Layout>
