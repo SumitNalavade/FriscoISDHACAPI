@@ -17,7 +17,7 @@ const Home: React.FC = () => {
                     <h3 className="text-2xl font-bold mt-10 my-2 text-headline">Base API URL</h3>
                     <CopyBlock
                         language="javascript"
-                        text="https://friscoisdhacapi.vercel.app/api/"
+                        text="https://friscoisdhacapi.vercel.app"
                         showLineNumbers={false}
                         theme={solarizedLight}
                         wrapLines={true}

@@ -9,6 +9,6 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, `
 		<h1>Frisco ISD HAC API</h1>
 		<p>Documentation:</p>
-		<a>friscoisdhacapidocs.vercel.app/</a>
+		<a>https://fisdhacapi.netlify.app/</a>
 	`)
 }

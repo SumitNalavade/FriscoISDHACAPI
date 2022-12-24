@@ -21,10 +21,10 @@ const APIRoutes: IAPIRoute[] = [
             }
         ],
         exampleRequest: `axios.get("https://friscoisdhacapi.vercel.app/api/info?username=john&password=doe").then((res) => {
-  console.log(res.data);
-}).catch((error) => {
-  console.log(error);
-})`,
+            console.log(res.data);
+        }).catch((error) => {
+            console.log(error);
+        })`,
         exampleResponse: `
         {
             "birthdate": "12/24/2003",
@@ -55,10 +55,10 @@ const APIRoutes: IAPIRoute[] = [
             }
         ],
         exampleRequest: `https://friscoisdhacapi.vercel.app/api/gpa?username=john&password=doe").then((res) => {
-  console.log(res.data);
-}).catch((error) => {
-  console.log(error);
-})`,
+            console.log(res.data);
+        }).catch((error) => {
+            console.log(error);
+        })`,
         exampleResponse: `
         {
             "unweightedGPA" : "3.8800",
@@ -85,10 +85,10 @@ const APIRoutes: IAPIRoute[] = [
             }
         ],
         exampleRequest: `https://friscoisdhacapi.vercel.app/api/schedule?username=john&password=doe").then((res) => {
-  console.log(res.data);
-}).catch((error) => {
-  console.log(error);
-})`,
+            console.log(res.data);
+        }).catch((error) => {
+            console.log(error);
+        })`,
         exampleResponse: `
         [
               {
@@ -300,10 +300,10 @@ const APIRoutes: IAPIRoute[] = [
             }
         ],
         exampleRequest: `https://friscoisdhacapi.vercel.app/api/currentclasses?username=john&password=doe").then((res) => {
-  console.log(res.data);
-}).catch((error) => {
-  console.log(error);
-})`,
+            console.log(res.data);
+        }).catch((error) => {
+            console.log(error);
+        })`,
         exampleResponse: `
         [
               {
@@ -658,10 +658,10 @@ const APIRoutes: IAPIRoute[] = [
             }
         ],
         exampleRequest: `axios.get("https://friscoisdhacapi.vercel.app/api/pastclasses?username=john&password=doe&quarter=1").then((res) => {
-  console.log(res.data);
-}).catch((error) => {
-  console.log(error);
-})`,
+            console.log(res.data);
+        }).catch((error) => {
+            console.log(error);
+        })`,
         exampleResponse: `
         [
               {
