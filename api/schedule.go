@@ -59,7 +59,13 @@ func ScheduleHandler(w http.ResponseWriter, r *http.Request) {
 		courses = append(courses, newCourse)
 	})
 
-	response, _ := json.Marshal(courses)
+	type StudentScheduleResponse struct {
+		StudentSchedule []utils.StudentScheduleType `json:"studentSchedule"`
+	}
+
+	response, _ := json.Marshal(StudentScheduleResponse{
+		StudentSchedule: courses,
+	})
 	
 	if(string(response) == "null") {
 		w.WriteHeader(http.StatusUnauthorized)
