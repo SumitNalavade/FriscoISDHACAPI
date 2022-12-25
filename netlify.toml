@@ -1,3 +1,0 @@
-# repository root netlify.toml
-[build]
-  base = "docs/"
