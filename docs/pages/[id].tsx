@@ -78,7 +78,7 @@ const Route: React.FC<Props> = ({ route }) => {
             codeBlock
           />
 
-        <h3 className="text-2xl font-bold mt-10 text-headline">Example Request</h3>
+        <h3 className="text-2xl mb-4 font-bold mt-10 text-headline">Example Request</h3>
         <CopyBlock
             language="javascript"
             text={exampleRequest}
