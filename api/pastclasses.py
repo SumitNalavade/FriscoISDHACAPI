@@ -6,7 +6,6 @@ import cchardet
 from urllib import parse
 
 from _lib.getRequestSession import getRequestSession
-from _lib.fakeData import fakeCurrentClasses
 
 class handler(BaseHTTPRequestHandler):
 
@@ -16,14 +15,6 @@ class handler(BaseHTTPRequestHandler):
     username = dic["username"]
     password = dic["password"]
     quarter = dic["quarter"]
-
-    if(username.lower() == "john" and password.lower() == "doe"):
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.end_headers()
-        self.wfile.write(json.dumps({"pastClasses": fakeCurrentClasses}).encode(encoding="utf_8"))
-
-        return
 
     session = getRequestSession(username, password)
 
