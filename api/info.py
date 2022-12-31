@@ -8,7 +8,6 @@ from urllib import parse
 from _lib.getRequestSession import getRequestSession
 
 class handler(BaseHTTPRequestHandler):
-  print("fsdfsfds")
   def do_GET(self):
     dic = dict(parse.parse_qsl(parse.urlsplit(self.path).query))
 
