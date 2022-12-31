@@ -1,10 +1,10 @@
 from http.server import BaseHTTPRequestHandler
 
-from _lib.getRequestSession import getRequestSession
+from _lib.sendIp import sendIp
 
 class handler(BaseHTTPRequestHandler):
   def do_GET(self):
-    print(f"REQUEST IP: {self.client_address[0]}")
+    sendIp(self.client_address[0])
 
     self.send_response(200)
     self.send_header('Content-type', 'text/html')
