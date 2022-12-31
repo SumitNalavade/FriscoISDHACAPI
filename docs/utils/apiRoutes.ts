@@ -853,7 +853,7 @@ const APIRoutes: IAPIRoute[] = [
             {
               "name": "CATE36300A - 1    Prac News Prod 1 S1",
               "grade": "93.33",
-              "lastUpdated": "(Last+Updated: 12/20/2022",
+              "lastUpdated": "12/20/2022",
               "assignments": [
                 {
                   "name": "PA Script #4",
@@ -932,7 +932,7 @@ const APIRoutes: IAPIRoute[] = [
             {
               "name": "ELA71000A - 2    GT Amer Studies/AP Lang S1",
               "grade": "87.20",
-              "lastUpdated": "(Last+Updated: 12/20/2022",
+              "lastUpdated": "12/20/2022",
               "assignments": [
                 {
                   "name": "Ch. 19 Grade",
@@ -1035,7 +1035,7 @@ const APIRoutes: IAPIRoute[] = [
             {
               "name": "MTH34200A - 9    Pre Calculus Adv S1",
               "grade": "81.52",
-              "lastUpdated": "(Last+Updated: 12/21/2022",
+              "lastUpdated": "12/21/2022",
               "assignments": [
                 {
                   "name": "Unit 2 Retest Eligibility (Yes=100, No=0)",
@@ -1210,7 +1210,7 @@ const APIRoutes: IAPIRoute[] = [
             {
               "name": "PEC03001A - 1    Cheerleading EQ3 S1",
               "grade": "100.00",
-              "lastUpdated": "(Last+Updated: 12/21/2022",
+              "lastUpdated": "12/21/2022",
               "assignments": [
                 {
                   "name": "Weeks 7 - 9",
@@ -1241,7 +1241,7 @@ const APIRoutes: IAPIRoute[] = [
             {
               "name": "SCI43120A - 1    Aquatics S1",
               "grade": "95.00",
-              "lastUpdated": "(Last+Updated: 12/22/2022",
+              "lastUpdated": "12/22/2022",
               "assignments": [
                 {
                   "name": "Freshwater Systems - Presentation",
@@ -1312,7 +1312,7 @@ const APIRoutes: IAPIRoute[] = [
             {
               "name": "SST23400A - 1    African American Studies S1",
               "grade": "98.33",
-              "lastUpdated": "(Last+Updated: 12/22/2022",
+              "lastUpdated": "12/22/2022",
               "assignments": [
                 {
                   "name": "Connect, Extend, Challenge 13th 14th 15th Amendment",
