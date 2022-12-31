@@ -116,7 +116,9 @@ class handler(BaseHTTPRequestHandler):
             newCourse["name"] = parser.find("a", "sg-header-heading").text.strip()
 
             newCourse["lastUpdated"] = parser.find(
-                "span", "sg-header-sub-heading").text.strip().replace("(Last Updated: ", "").replace(")", "")
+                "span", "sg-header-sub-heading").text.strip().replace("(Last+Updated: ", "").replace(")", "")
+
+            print(newCourse["lastUpdated"])
 
             newCourse["grade"] = parser.find("span", "sg-header-heading sg-right").text.strip(
             ).replace("Student Grades ", "").replace("%", "")
