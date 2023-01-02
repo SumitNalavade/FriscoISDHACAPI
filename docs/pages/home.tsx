@@ -47,7 +47,7 @@ const Home: React.FC = () => {
                     <h3 className="text-2xl font-bold mt-10 my-2 text-headline">Behind The Scenes</h3>
                     <p>The API uses sends HTTP POST requests to Frisco ISD HAC servers with a username and password.</p>
                     <p>If the login is authenticated, HAC responds with an HTML page with student information.</p>
-                    <p>The resulting HTML page is then parsed using the GoQuery library and the requested information is extracted from the markup.</p>
+                    <p>The resulting HTML page is then parsed and the requested information is extracted from the markup.</p>
 
                     <h3 className="text-2xl font-bold mt-10 my-2 text-headline">Security</h3>
                     <p>No user information is stored in any databases. All of the proccessing that happens in a request is dumped once the request has resolved.</p>
@@ -55,8 +55,8 @@ const Home: React.FC = () => {
                     <h3 className="text-2xl font-bold mt-10 my-2 text-headline">Feedback</h3>
                     <p>If you have any feedback, please reach out to me at vs.nalavade2003@gmail.com</p>
 
-                    <h3 className="text-2xl font-bold mt-10 my-2 text-headline">Feedback</h3>
-                    [MIT] https://github.com/SumitNalavade/FriscoISDHACAPI/blob/master/License
+                    <h3 className="text-2xl font-bold mt-10 my-2 text-headline">License</h3>
+                    <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
                 </div>
             </div>
         </Layout>

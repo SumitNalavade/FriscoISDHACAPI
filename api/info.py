@@ -8,10 +8,9 @@ from urllib import parse
 from _lib.getRequestSession import getRequestSession
 
 class handler(BaseHTTPRequestHandler):
+
   def do_GET(self):
     dic = dict(parse.parse_qsl(parse.urlsplit(self.path).query))
-
-    print(f"REQUEST IP: {self.client_address[0]}")
 
     username = dic["username"]
     password = dic["password"]

@@ -12,8 +12,6 @@ class handler(BaseHTTPRequestHandler):
   def do_GET(self):
     dic = dict(parse.parse_qsl(parse.urlsplit(self.path).query))
 
-    print(f"REQUEST IP: {self.client_address[0]}")
-
     username = dic["username"]
     password = dic["password"]
     quarter = dic["quarter"]
@@ -116,9 +114,7 @@ class handler(BaseHTTPRequestHandler):
             newCourse["name"] = parser.find("a", "sg-header-heading").text.strip()
 
             newCourse["lastUpdated"] = parser.find(
-                "span", "sg-header-sub-heading").text.strip().replace("(Last+Updated: ", "").replace(")", "")
-
-            print(newCourse["lastUpdated"])
+                "span", "sg-header-sub-heading").text.strip().replace("(Last Updated: ", "").replace(")", "")
 
             newCourse["grade"] = parser.find("span", "sg-header-heading sg-right").text.strip(
             ).replace("Student Grades ", "").replace("%", "")
