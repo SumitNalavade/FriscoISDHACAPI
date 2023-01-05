@@ -27,7 +27,11 @@ const Home: React.FC = () => {
                     <h3 className="text-2xl font-bold mt-10 my-2 text-headline">Example API Request</h3>
                     <CopyBlock
                         language="javascript"
-                        text={apiRoutes[0].exampleRequest}
+                        text={`axios.get("friscoisdhacapi.vercel.app${apiRoutes[0].exampleRequest}").then((res) => {
+    console.log(res.data);
+}).catch((error) => {
+    console.log(error);
+})`}
                         showLineNumbers={false}
                         theme={solarizedLight}
                         wrapLines={true}

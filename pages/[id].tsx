@@ -48,7 +48,7 @@ const Route: React.FC<Props> = ({ route }) => {
 
     Object.keys(testQueryParameters).forEach((key) => {
       //@ts-ignore
-     url = url.replace(`{${key}}`, testQueryParameters[key]).replace(`${route.type} `, "https://friscoisdhacapi.vercel.app");
+     url = url.replace(`{${key}}`, testQueryParameters[key]).replace(`${route.type} `, "");
     })
 
     const response = await axios.get(url).catch((err) => setIsError(true));
@@ -81,7 +81,11 @@ const Route: React.FC<Props> = ({ route }) => {
         <h3 className="text-2xl mb-4 font-bold mt-10 text-headline">Example Request</h3>
         <CopyBlock
             language="javascript"
-            text={exampleRequest}
+            text={`axios.get("friscoisdhacapi.vercel.app${exampleRequest}").then((res) => {
+  console.log(res.data);
+}).catch((error) => {
+  console.log(error);
+})`}
             showLineNumbers={false}
             theme={solarizedLight}
             wrapLines={true}
