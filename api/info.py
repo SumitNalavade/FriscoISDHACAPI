@@ -5,7 +5,7 @@ import lxml
 import cchardet
 from urllib import parse
 
-from api.api._lib.getRequestSession import getRequestSession
+from api._lib.getRequestSession import getRequestSession
 
 class handler(BaseHTTPRequestHandler):
 
