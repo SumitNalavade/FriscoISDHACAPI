@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import lxml
-import cchardet
 
 def getRequestSession(username, password):
     requestSession = requests.session()

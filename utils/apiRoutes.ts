@@ -5,7 +5,7 @@ const APIRoutes: IAPIRoute[] = [
         type: "GET",
         id: "info",
         title: "Student Info",
-        description: "Get a student's personal information from HAC",
+        description: "Get a student's personal information",
         queryParameters: [
             {
                 title: "username",
@@ -34,7 +34,7 @@ const APIRoutes: IAPIRoute[] = [
         type: "GET",
         id: "gpa",
         title: "Student GPAs",
-        description: "Get a student's most recently published weighted and unweighted GPA from HAC",
+        description: "Get a student's most recently published GPAs and total number of credits taken",
         queryParameters: [
             {
                 title: "username",

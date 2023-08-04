@@ -1,5 +1,5 @@
 urllib3==1.26.7
 bs4==0.0.1
-cchardet==2.1.7
-lxml==4.7.1
+faust-cchardet==2.1.18
+lxml
 requests==2.26.0

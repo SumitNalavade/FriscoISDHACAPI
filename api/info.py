@@ -2,7 +2,6 @@ from http.server import BaseHTTPRequestHandler
 from bs4 import BeautifulSoup
 import json
 import lxml
-import cchardet
 from urllib import parse
 
 from api._lib.getRequestSession import getRequestSession
@@ -26,6 +25,7 @@ class handler(BaseHTTPRequestHandler):
     studentCounselor = parser.find(id="plnMain_lblCounselor").text
     studentCampus = parser.find(id="plnMain_lblBuildingName").text
     studentGrade = parser.find(id="plnMain_lblGrade").text
+    totalCredits = 0
 
     # Try to get the student id from the registration page
     # If this fails, try to get the student id from the student schedule page
@@ -46,7 +46,8 @@ class handler(BaseHTTPRequestHandler):
       "birthdate": studentBirthdate,
       "campus": studentCampus,
       "grade": studentGrade,
-      "counselor": studentCounselor
+      "counselor": studentCounselor,
+      "totalCredits": str(totalCredits)
     }).encode(encoding="utf_8"))
 
     return

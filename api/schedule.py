@@ -2,7 +2,6 @@ from http.server import BaseHTTPRequestHandler
 from bs4 import BeautifulSoup
 import json
 import lxml
-import cchardet
 from urllib import parse
 
 from api._lib.getRequestSession import getRequestSession
