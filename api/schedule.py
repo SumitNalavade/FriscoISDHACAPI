@@ -19,8 +19,6 @@ class handler(BaseHTTPRequestHandler):
         schedulePageContent = session.get(
             "https://hac.friscoisd.org/HomeAccess/Content/Student/Classes.aspx").text
 
-        print(schedulePageContent)
-
         parser = BeautifulSoup(schedulePageContent, "lxml")
 
         schedule = []
