@@ -23,17 +23,24 @@ class handler(BaseHTTPRequestHandler):
 
         parser = BeautifulSoup(transcriptPageContent, "lxml")
 
+        rank = None
         weightedGpa = parser.find(
             id="plnMain_rpTranscriptGroup_lblGPACum1").text
         unweightedGpa = parser.find(
             id="plnMain_rpTranscriptGroup_lblGPACum2").text
+        
+        try:
+            rank = parser.find(id='m_plnMain_rpTranscriptGroup_lblGPARank1').text
+        except:
+            pass
 
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
         self.end_headers()
         self.wfile.write(json.dumps({
             "weightedGPA": weightedGpa,
-            "unweightedGPA": unweightedGpa
+            "unweightedGPA": unweightedGpa,
+            'rank': rank
         }).encode(encoding="utf_8"))
 
         return

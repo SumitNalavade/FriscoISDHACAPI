@@ -34,7 +34,7 @@ const APIRoutes: IAPIRoute[] = [
     type: "GET",
     id: "gpa",
     title: "Student GPAs",
-    description: "Get a student's most recently published GPAs",
+    description: "Get a student's most recently published GPAs and rank",
     queryParameters: [
       {
         title: "username",
