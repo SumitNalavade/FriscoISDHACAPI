@@ -52,7 +52,8 @@ const APIRoutes: IAPIRoute[] = [
     exampleRequest: `/api/gpa?username=john&password=doe`,
     exampleResponse: `{
 "unweightedGPA" : "3.8800",
-"weightedGPA" : "5.0500"
+"weightedGPA" : "5.0500",
+"rank" : "34 / 449"
 }`
   },
   {

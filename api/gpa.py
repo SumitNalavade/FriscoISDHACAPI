@@ -7,7 +7,6 @@ from urllib import parse
 
 from api._lib.getRequestSession import getRequestSession
 
-
 class handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
