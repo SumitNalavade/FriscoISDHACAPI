@@ -29,7 +29,7 @@ class handler(BaseHTTPRequestHandler):
             id="plnMain_rpTranscriptGroup_lblGPACum2").text
         
         try:
-            rank = parser.find(id='m_plnMain_rpTranscriptGroup_lblGPARank1').text
+            rank = parser.find(id='plnMain_rpTranscriptGroup_lblGPARank1').text
         except:
             pass
 
