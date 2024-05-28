@@ -918,7 +918,7 @@ const APIRoutes: IAPIRoute[] = [
       {
         title: "quarter",
         type: "number",
-        description: "Grading quarter (1st, 2nd, 3rd, 4th)",
+        description: "Grading quarter (1, 2, 3, 4)",
         required: true
       }
     ],
