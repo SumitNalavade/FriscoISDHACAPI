@@ -114,11 +114,11 @@ const Route: React.FC<Props> = ({ route }) => {
             </ul>
             <p>
               Remember to URL-encode these characters before sending requests. For example,
-              if a password contains `&apos;`#`&apos;`, it should be sent as `&apos;`%23`&apos;` in the API request.
+              if a password contains &apos;#&apos;, it should be sent as &apos;%23&apos; in the API request.
             </p>
 
             <p>
-              For example the password: `&apos;`Testing#123`&apos;` must be converted to `&apos;`Testing%23123`&apos;`
+              For example the password: &apos;Testing#123&apos; must be converted to &apos;Testing%23123&apos;
             </p>
           </div>
 

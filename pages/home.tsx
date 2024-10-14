@@ -5,7 +5,7 @@ import Layout from "../components/layout";
 import Drawer from "../components/drawer";
 
 import { CopyBlock, solarizedLight } from "react-code-blocks";
-     
+
 const Home: React.FC = () => {
     return (
         <Layout>
@@ -47,7 +47,31 @@ const Home: React.FC = () => {
                         wrapLines={true}
                         codeBlock
                     />
-                
+
+                    <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 my-4">
+                        <h4 className="font-bold mb-2">Warning: Use URL-safe characters in credentials</h4>
+                        <p className="mb-2">
+                            Ensure that all credentials do not contain any characters that are invalid in URLs.
+                            Before sending an API request from the client, you must convert invalid characters.
+                        </p>
+                        <p className="mb-2">Examples of characters to avoid and their URL-encoded equivalents:</p>
+                        <ul className="list-disc list-inside mb-2">
+                            <li># (hash) - use %23</li>
+                            <li>& (ampersand) - use %26</li>
+                            <li>+ (plus) - use %2B</li>
+                            <li>/ (forward slash) - use %2F</li>
+                            <li>@ (at symbol) - use %40</li>
+                        </ul>
+                        <p>
+                            Remember to URL-encode these characters before sending requests. For example,
+                            if a password contains &apos;#&apos;, it should be sent as &apos;%23&apos; in the API request.
+                        </p>
+
+                        <p>
+                            For example the password: &apos;Testing#123&apos; must be converted to &apos;Testing%23123&apos;
+                        </p>
+                    </div>
+
                     <h3 className="text-2xl font-bold mt-10 my-2 text-headline">Behind The Scenes</h3>
                     <p>The API uses sends HTTP POST requests to Frisco ISD HAC servers with a username and password.</p>
                     <p>If the login is authenticated, HAC responds with an HTML page with student information.</p>
