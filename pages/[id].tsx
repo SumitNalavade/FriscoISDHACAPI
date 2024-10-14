@@ -98,6 +98,30 @@ const Route: React.FC<Props> = ({ route }) => {
             codeBlock
           />
 
+          <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 my-4">
+            <h4 className="font-bold mb-2">Warning: Use URL-safe characters in credentials</h4>
+            <p className="mb-2">
+              Ensure that all credentials do not contain any characters that are invalid in URLs.
+              Before sending an API request from the client, you must convert invalid characters.
+            </p>
+            <p className="mb-2">Examples of characters to avoid and their URL-encoded equivalents:</p>
+            <ul className="list-disc list-inside mb-2">
+              <li># (hash) - use %23</li>
+              <li>& (ampersand) - use %26</li>
+              <li>+ (plus) - use %2B</li>
+              <li>/ (forward slash) - use %2F</li>
+              <li>@ (at symbol) - use %40</li>
+            </ul>
+            <p>
+              Remember to URL-encode these characters before sending requests. For example,
+              if a password contains `&apos;`#`&apos;`, it should be sent as `&apos;`%23`&apos;` in the API request.
+            </p>
+
+            <p>
+              For example the password: `&apos;`Testing#123`&apos;` must be converted to `&apos;`Testing%23123`&apos;`
+            </p>
+          </div>
+
           <h3 className="text-2xl font-bold mt-10 text-headline">Query Parameters</h3>
           <table className="table-fixed mt-4 mb-2 text-center">
             <thead>
