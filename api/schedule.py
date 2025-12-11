@@ -1,52 +1,75 @@
 from http.server import BaseHTTPRequestHandler
-from bs4 import BeautifulSoup
-import json
-import lxml
 from urllib import parse
+import json
 
+from bs4 import BeautifulSoup
 from api._lib.getRequestSession import getRequestSession
+
+
+SCHEDULE_URL = "https://hac.friscoisd.org/HomeAccess/Content/Student/Classes.aspx"
+
+def get_or_none(tds, i):
+    return tds[i] if i < len(tds) else None
 
 class handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        dic = dict(parse.parse_qsl(parse.urlsplit(self.path).query))
+        # --- Parse query parameters ---
+        query = parse.urlsplit(self.path).query
+        params = dict(parse.parse_qsl(query))
 
-        username = dic["username"]
-        password = dic["password"]
+        username = params.get("username")
+        password = params.get("password")
 
-        session = getRequestSession(username, password)
+        if not username or not password:
+            return self._send_json(
+                {"error": "Missing username or password in query parameters."},
+                status=400,
+            )
 
-        schedulePageContent = session.get(
-            "https://hac.friscoisd.org/HomeAccess/Content/Student/Classes.aspx").text
+        try:
+            # --- Authenticated session ---
+            session = getRequestSession(username, password)
 
-        parser = BeautifulSoup(schedulePageContent, "lxml")
+            # --- Fetch schedule page ---
+            resp = session.get(SCHEDULE_URL, timeout=10)
+            resp.raise_for_status()
+            html = resp.text
 
-        schedule = []
+            # --- Parse once ---
+            soup = BeautifulSoup(html, "lxml")
 
-        courses = parser.find_all("tr", "sg-asp-table-data-row")
+            schedule = []
+            # Find all schedule rows
+            for row in soup.select("#plnMain_dgSchedule > tr.sg-asp-table-data-row"):
+                # Directly get <td> cells in this row
+                tds = [td.get_text(strip=True) for td in row.find_all("td")]
 
-        for row in courses:
-            parser = BeautifulSoup(f"<html><body>{row}</body></html>", "lxml")
-            tds = [x.text.strip() for x in parser.find_all("td")]
-
-            if(len(tds) > 3):
                 schedule.append({
-                    "building": tds[7],
-                    "courseCode": tds[0],
-                    "courseName": tds[1],
-                    "days": tds[5],
-                    "markingPeriods": tds[6],
-                    "periods": tds[2],
-                    "room": tds[4],
-                    "status": tds[8],
-                    "teacher": tds[3],
+                    "building":       get_or_none(tds, 7),
+                    "courseCode":     get_or_none(tds, 0),
+                    "courseName":     get_or_none(tds, 1),
+                    "days":           get_or_none(tds, 5),
+                    "markingPeriods": get_or_none(tds, 6),
+                    "periods":        get_or_none(tds, 2),
+                    "room":           get_or_none(tds, 4),
+                    "status":         get_or_none(tds, 8),
+                    "teacher":        get_or_none(tds, 3),
                 })
 
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.end_headers()
-        self.wfile.write(json.dumps({
-            "studentSchedule": schedule,
-        }).encode(encoding="utf_8"))
+            return self._send_json({"studentSchedule": schedule}, status=200)
 
-        return
+        except Exception:
+            # In real code you’d log the exception
+            return self._send_json(
+                {"studentSchedule": [], "error": "Failed to fetch schedule."},
+                status=500,
+            )
+
+    def _send_json(self, payload, status=200):
+        body = json.dumps(payload).encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
