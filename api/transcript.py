@@ -1,68 +1,133 @@
 from http.server import BaseHTTPRequestHandler
-from bs4 import BeautifulSoup
-import json
-import lxml
 from urllib import parse
+import json
 
+from bs4 import BeautifulSoup
 from api._lib.getRequestSession import getRequestSession
+from api._lib.parsers import _get_text_or_empty_by_id
+
+TRANSCRIPT_URL = "https://hac.friscoisd.org/HomeAccess/Content/Student/Transcript.aspx"
+
+
+def _get_text_or_empty(tag, selector=None, **find_kwargs):
+    """
+    Given a BeautifulSoup Tag, optionally run .find() on it,
+    and return stripped text or "" if not found.
+    """
+    if tag is None:
+        return ""
+    if selector is not None:
+        tag = tag.select_one(selector)
+    elif find_kwargs:
+        tag = tag.find(**find_kwargs)
+    return tag.get_text(strip=True) if tag else ""
+
+def get_or_none(tds, i):
+    return tds[i] if i < len(tds) else None
 
 class handler(BaseHTTPRequestHandler):
+
     def do_GET(self):
-        dic = dict(parse.parse_qsl(parse.urlsplit(self.path).query))
+        query = parse.urlsplit(self.path).query
+        params = dict(parse.parse_qsl(query))
 
-        username = dic["username"]
-        password = dic["password"]
+        username = params.get("username")
+        password = params.get("password")
 
-        session = getRequestSession(username, password)
+        if not username or not password:
+            return self._send_json(
+                {"error": "Missing username or password in query parameters."},
+                status=400,
+            )
 
-        schedulePageContent = session.get("https://hac.friscoisd.org/HomeAccess/Content/Student/Transcript.aspx").text
+        try:
+            session = getRequestSession(username, password)
 
-        parser = BeautifulSoup(schedulePageContent, "lxml")
+            resp = session.get(TRANSCRIPT_URL, timeout=10)
+            resp.raise_for_status()
+            html = resp.text
 
-        transcriptGroup = parser.find_all("td", "sg-transcript-group")
+            soup = BeautifulSoup(html, "lxml")
 
-        transcriptDetails = []
-        for index, transcript in enumerate(transcriptGroup):
-            parser = BeautifulSoup(f"<html><body>{transcript}</body></html>", "lxml")
-            innerTables = parser.find_all('table')
+            transcript_details = []
+
+            transcript_groups = soup.find_all("td", class_="sg-transcript-group")
+
+            for idx, group in enumerate(transcript_groups):
+                # Each group has three tables: header, courses, totals
+                inner_tables = group.find_all("table")
+
+                header_table, courses_table, total_credits_table = inner_tables[:3]
+
+                years_attended = _get_text_or_empty(
+                    header_table,
+                    id=f"plnMain_rpTranscriptGroup_lblYearValue_{idx}",
+                    name="span",
+                )
+                grade_level = _get_text_or_empty(
+                    header_table,
+                    id=f"plnMain_rpTranscriptGroup_lblGradeValue_{idx}",
+                    name="span",
+                )
+                building = _get_text_or_empty(
+                    header_table,
+                    id=f"plnMain_rpTranscriptGroup_lblBuildingValue_{idx}",
+                    name="span",
+                )
+
+                course_details = []
+                course_rows = courses_table.find_all("tr", class_="sg-asp-table-data-row")
+
+                for course_row in course_rows:
+                    tds = [td.get_text(strip=True) for td in course_row.find_all("td")]
+
+                    course_details.append({
+                        "courseCode":    get_or_none(tds, 0),
+                        "courseName":    get_or_none(tds, 1),
+                        "sem1Grade":     get_or_none(tds, 2),
+                        "sem2Grade":     get_or_none(tds, 3),
+                        "finalGrade":    get_or_none(tds, 4),
+                        "courseCredits": get_or_none(tds, 5),
+                    })
+
+                total_credits = _get_text_or_empty(
+                    total_credits_table,
+                    id=f"plnMain_rpTranscriptGroup_LblTCreditValue_{idx}",
+                    name="label",
+                )
+
+                transcript_details.append({
+                    "yearsAttended": years_attended,
+                    "gradeLevel":    grade_level,
+                    "building":      building,
+                    "totalCredits":  total_credits,
+                    "courses":       course_details,
+                })
             
-            headerTable = innerTables[0]
-            coursesTable = innerTables[1]
-            totalCreditsTable = innerTables[2]
+            student_weighted_gpa = _get_text_or_empty_by_id(
+                soup, "plnMain_rpTranscriptGroup_lblGPACum1")
+            student_unweighted_gpa = _get_text_or_empty_by_id(
+                soup, "plnMain_rpTranscriptGroup_lblGPACum2")
+            student_rank = _get_text_or_empty_by_id(
+                soup, "plnMain_rpTranscriptGroup_lblGPARank1")
 
-            parser = BeautifulSoup(f"<html><body>{headerTable}</body></html>", "lxml")
-            yearsAttended = parser.find('span', id=f'plnMain_rpTranscriptGroup_lblYearValue_{index}').text.strip()
-            gradeLevel = parser.find('span', id=f'plnMain_rpTranscriptGroup_lblGradeValue_{index}').text.strip()
-            building = parser.find('span', id=f'plnMain_rpTranscriptGroup_lblBuildingValue_{index}').text.strip()
+            return self._send_json({
+                "studentTranscript": transcript_details,
+                "weightedGPA": student_weighted_gpa,
+                "unweightedGPA": student_unweighted_gpa,
+                "rank": student_rank,
+            }, status=200)
 
-            parser = BeautifulSoup(f"<html><body>{coursesTable}</body></html>", "lxml")
-            courseRows = parser.find_all('tr', 'sg-asp-table-data-row')
+        except Exception:
+            return self._send_json(
+                {"studentTranscript": [], "error": "Failed to fetch transcript."},
+                status=500,
+            )
 
-            courseDetails = []
-
-            for courseRow in courseRows:
-                parser = BeautifulSoup(f"<html><body>{courseRow}</body></html>", "lxml")
-                courseInfo = parser.find_all('td')
-
-                courseCode = courseInfo[0].text.strip()
-                courseName = courseInfo[1].text.strip()
-                sem1Grade = courseInfo[2].text.strip()
-                sem2Grade = courseInfo[3].text.strip()
-                finalGrade = courseInfo[4].text.strip()
-                courseCredits = courseInfo[5].text.strip()
-
-                courseDetails.append({ 'courseCode': courseCode, 'courseName': courseName, 'sem1Grade': sem1Grade, 'sem2Grade': sem2Grade, 'finalGrade': finalGrade, 'courseCredits': courseCredits })
-
-            parser = BeautifulSoup(f"<html><body>{totalCreditsTable}</body></html>", "lxml")
-            totalCredits = parser.find('label', id=f'plnMain_rpTranscriptGroup_LblTCreditValue_{index}').text
-
-            transcriptDetails.append({ 'yearsAttended': yearsAttended, 'gradeLevel': gradeLevel, 'building': building, 'totalCredits': totalCredits, 'courses': courseDetails })
-            
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
+    def _send_json(self, payload, status=200):
+        body = json.dumps(payload).encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
         self.end_headers()
-        self.wfile.write(json.dumps({
-            "studentTranscript": transcriptDetails,
-        }).encode(encoding="utf_8"))
-
-        return
+        self.wfile.write(body)
