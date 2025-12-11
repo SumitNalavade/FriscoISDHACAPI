@@ -60,7 +60,6 @@ class handler(BaseHTTPRequestHandler):
             return self._send_json({"studentSchedule": schedule}, status=200)
 
         except Exception:
-            # In real code you’d log the exception
             return self._send_json(
                 {"studentSchedule": [], "error": "Failed to fetch schedule."},
                 status=500,
