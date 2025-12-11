@@ -4,12 +4,7 @@ import json
 
 from bs4 import BeautifulSoup
 from api._lib.getRequestSession import getRequestSession
-
-
-def _get_text_or_empty_by_id(soup: BeautifulSoup, element_id: str) -> str:
-    """Return the stripped text of an element by id, or empty string if missing."""
-    el = soup.find(id=element_id)
-    return el.get_text(strip=True) if el else ""
+from api._lib.parsers import _get_text_or_empty_by_id
 
 TRANSCRIPT_URL = "https://hac.friscoisd.org/HomeAccess/Content/Student/Transcript.aspx"
 
