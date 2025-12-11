@@ -1,93 +1,111 @@
 from http.server import BaseHTTPRequestHandler
-from bs4 import BeautifulSoup
-import json
-import lxml
 from urllib import parse
+import json
 
+from bs4 import BeautifulSoup
 from api._lib.getRequestSession import getRequestSession
 
+ASSIGNMENTS_URL = "https://hac.friscoisd.org/HomeAccess/Content/Student/Assignments.aspx"
+
+def get_or_none(tds, i):
+    """Return tds[i] if present, else None."""
+    return tds[i] if i < len(tds) else None
 
 class handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        dic = dict(parse.parse_qsl(parse.urlsplit(self.path).query))
+        query = parse.urlsplit(self.path).query
+        params = dict(parse.parse_qsl(query))
 
-        username = dic["username"]
-        password = dic["password"]
+        username = params.get("username")
+        password = params.get("password")
 
-        session = getRequestSession(username, password)
+        if not username or not password:
+            return self._send_json(
+                {"error": "Missing username or password in query parameters."},
+                status=400,
+            )
 
-        coursesPageContent = session.get(
-            "https://hac.friscoisd.org/HomeAccess/Content/Student/Assignments.aspx").text
+        try:
+            session = getRequestSession(username, password)
 
-        parser = BeautifulSoup(coursesPageContent, "lxml")
+            resp = session.get(ASSIGNMENTS_URL, timeout=10)
+            resp.raise_for_status()
+            html = resp.text
 
-        courses = []
+            soup = BeautifulSoup(html, "lxml")
 
-        courseContainer = parser.find_all("div", "AssignmentClass")
+            courses = []
 
-        for container in courseContainer:
-            newCourse = {
-                "name": "",
-                "grade": "",
-                "lastUpdated": "",
-                "assignments": []
-            }
-            parser = BeautifulSoup(
-                f"<html><body>{container}</body></html>", "lxml")
-            headerContainer = parser.find_all(
-                "div", "sg-header sg-header-square")
-            assignementsContainer = parser.find_all("div", "sg-content-grid")
+            for course_div in soup.find_all("div", class_="AssignmentClass"):
+                new_course = {
+                    "name": None,
+                    "grade": None,
+                    "lastUpdated": None,
+                    "assignments": [],
+                }
 
-            for hc in headerContainer:
-                parser = BeautifulSoup(
-                    f"<html><body>{hc}</body></html>", "lxml")
+                # ---- Header block ----
+                header_div = course_div.find("div", class_="sg-header sg-header-square")
+                if header_div:
 
-                newCourse["name"] = parser.find(
-                    "a", "sg-header-heading").text.strip()
+                    # Course name
+                    name_tag = header_div.find("a", class_="sg-header-heading")
+                    new_course["name"] = name_tag.get_text(strip=True) if name_tag else None
 
-                newCourse["lastUpdated"] = parser.find(
-                    "span", "sg-header-sub-heading").text.strip().replace("(Last Updated: ", "").replace(")", "")
+                    # Last updated
+                    lu_tag = header_div.find("span", class_="sg-header-sub-heading")
+                    if lu_tag:
+                        text = lu_tag.get_text(strip=True)
+                        text = text.replace("(Last Updated: ", "").replace(")", "").strip()
+                        new_course["lastUpdated"] = text
 
-                newCourse["grade"] = parser.find("span", "sg-header-heading sg-right").text.strip(
-                ).replace("Student Grades ", "").replace("%", "")
-
-            for ac in assignementsContainer:
-                parser = BeautifulSoup(
-                    f"<html><body>{ac}</body></html>", "lxml")
-                rows = parser.find_all("tr", "sg-asp-table-data-row")
-                for assignmentContainer in rows:
-                    try:
-                        parser = BeautifulSoup(
-                            f"<html><body>{assignmentContainer}</body></html>", "lxml")
-                        tds = parser.find_all("td")
-                        assignmentName = parser.find("a").text.strip()
-                        assignmentDateDue = tds[0].text.strip()
-                        assignmentDateAssigned = tds[1].text.strip()
-                        assignmentCategory = tds[3].text.strip()
-                        assignmentScore = tds[4].text.strip()
-                        assignmentTotalPoints = tds[5].text.strip()
-
-                        newCourse["assignments"].append(
-                            {
-                                "name": assignmentName,
-                                "category": assignmentCategory,
-                                "dateAssigned": assignmentDateAssigned,
-                                "dateDue": assignmentDateDue,
-                                "score": assignmentScore,
-                                "totalPoints": assignmentTotalPoints
-                            }
+                    # Grade
+                    grade_tag = header_div.find("span", class_="sg-header-heading sg-right")
+                    if grade_tag:
+                        grade_text = grade_tag.get_text(strip=True)
+                        grade_text = (
+                            grade_text.replace("Student Grades ", "").replace("%", "").strip()
                         )
-                    except:
-                        pass
+                        new_course["grade"] = grade_text
 
-                courses.append(newCourse)
+                content_div = course_div.find("div", class_="sg-content-grid")
+                if content_div:
+                    rows = content_div.find_all("tr", class_="sg-asp-table-data-row")
 
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
+                    for row in rows:
+                        tds = [td.get_text(strip=True) for td in row.find_all("td")]
+
+                        assignment_date_due = get_or_none(tds, 0)
+                        assignment_date_assigned = get_or_none(tds, 1)
+                        assignment_name = get_or_none(tds, 2)
+                        assignment_category = get_or_none(tds, 3)
+                        assignment_score = get_or_none(tds, 4)
+                        assignment_total_points = get_or_none(tds, 5)
+
+                        new_course["assignments"].append({
+                            "name": assignment_name,
+                            "category": assignment_category,
+                            "dateAssigned": assignment_date_assigned,
+                            "dateDue": assignment_date_due,
+                            "score": assignment_score,
+                            "totalPoints": assignment_total_points,
+                        })
+
+                courses.append(new_course)
+
+            return self._send_json({"currentClasses": courses}, status=200)
+
+        except Exception as e:
+            return self._send_json(
+                {"currentClasses": [], "error": "Failed to fetch assignments."},
+                status=500,
+            )
+
+    def _send_json(self, payload, status=200):
+        body = json.dumps(payload).encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
         self.end_headers()
-        self.wfile.write(json.dumps({
-            "currentClasses": courses,
-        }).encode(encoding="utf_8"))
-
-        return
+        self.wfile.write(body)
