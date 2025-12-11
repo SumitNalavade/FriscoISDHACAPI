@@ -14,7 +14,6 @@ def get_or_none(tds, i):
 class handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        # --- Parse query parameters ---
         query = parse.urlsplit(self.path).query
         params = dict(parse.parse_qsl(query))
 
@@ -28,21 +27,17 @@ class handler(BaseHTTPRequestHandler):
             )
 
         try:
-            # --- Authenticated session ---
             session = getRequestSession(username, password)
 
-            # --- Fetch schedule page ---
             resp = session.get(SCHEDULE_URL, timeout=10)
             resp.raise_for_status()
             html = resp.text
 
-            # --- Parse once ---
             soup = BeautifulSoup(html, "lxml")
 
             schedule = []
-            # Find all schedule rows
+            # Find all schedule rows in the main schedule table
             for row in soup.select("#plnMain_dgSchedule > tr.sg-asp-table-data-row"):
-                # Directly get <td> cells in this row
                 tds = [td.get_text(strip=True) for td in row.find_all("td")]
 
                 schedule.append({
