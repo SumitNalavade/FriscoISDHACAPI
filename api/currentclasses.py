@@ -7,9 +7,11 @@ from api._lib.getRequestSession import getRequestSession
 
 ASSIGNMENTS_URL = "https://hac.friscoisd.org/HomeAccess/Content/Student/Assignments.aspx"
 
+
 def get_or_none(tds, i):
     """Return tds[i] if present, else None."""
     return tds[i] if i < len(tds) else None
+
 
 class handler(BaseHTTPRequestHandler):
 
@@ -48,7 +50,6 @@ class handler(BaseHTTPRequestHandler):
                 # ---- Header block ----
                 header_div = course_div.find("div", class_="sg-header sg-header-square")
                 if header_div:
-
                     # Course name
                     name_tag = header_div.find("a", class_="sg-header-heading")
                     new_course["name"] = name_tag.get_text(strip=True) if name_tag else None
@@ -60,15 +61,18 @@ class handler(BaseHTTPRequestHandler):
                         text = text.replace("(Last Updated: ", "").replace(")", "").strip()
                         new_course["lastUpdated"] = text
 
-                    # Grade
+                    # Grade (overall course grade)
                     grade_tag = header_div.find("span", class_="sg-header-heading sg-right")
                     if grade_tag:
                         grade_text = grade_tag.get_text(strip=True)
                         grade_text = (
-                            grade_text.replace("Student Grades ", "").replace("%", "").strip()
+                            grade_text.replace("Student Grades ", "")
+                                      .replace("%", "")
+                                      .strip()
                         )
                         new_course["grade"] = grade_text
 
+                # ---- Assignments ----
                 content_div = course_div.find("div", class_="sg-content-grid")
                 if content_div:
                     rows = content_div.find_all("tr", class_="sg-asp-table-data-row")
@@ -76,9 +80,16 @@ class handler(BaseHTTPRequestHandler):
                     for row in rows:
                         tds = [td.get_text(strip=True) for td in row.find_all("td")]
 
+                        # Assignment name lives in an <a> tag in the row
+                        name_tag = row.find("a")
+                        if not name_tag:
+                            # Usually a summary/total row, not a real assignment
+                            continue
+
+                        assignment_name = name_tag.get_text(strip=True)
+
                         assignment_date_due = get_or_none(tds, 0)
                         assignment_date_assigned = get_or_none(tds, 1)
-                        assignment_name = get_or_none(tds, 2)
                         assignment_category = get_or_none(tds, 3)
                         assignment_score = get_or_none(tds, 4)
                         assignment_total_points = get_or_none(tds, 5)
@@ -96,7 +107,7 @@ class handler(BaseHTTPRequestHandler):
 
             return self._send_json({"currentClasses": courses}, status=200)
 
-        except Exception as e:
+        except Exception:
             return self._send_json(
                 {"currentClasses": [], "error": "Failed to fetch assignments."},
                 status=500,
