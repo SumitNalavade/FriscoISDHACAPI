@@ -1,6 +1,7 @@
 from http.server import BaseHTTPRequestHandler
 from urllib import parse
 import json
+import re
 
 from bs4 import BeautifulSoup
 from api._lib.getRequestSession import getRequestSession
@@ -12,6 +13,17 @@ def get_or_none(tds, i):
     """Return tds[i] if present, else None."""
     return tds[i] if i < len(tds) else None
 
+def _clean_last_updated(text: str) -> str | None:
+    if not text:
+        return None
+    # HAC sometimes uses "+" instead of spaces in this string
+    text = text.replace("+", " ")
+    # Try to extract just the date, like 12/8/2025
+    m = re.search(r"\d{1,2}/\d{1,2}/\d{4}", text)
+    if m:
+        return m.group(0)
+    # Fallback: strip parentheses and whitespace
+    return text.strip("() ").strip()
 
 class handler(BaseHTTPRequestHandler):
 
@@ -57,9 +69,8 @@ class handler(BaseHTTPRequestHandler):
                     # Last updated
                     lu_tag = header_div.find("span", class_="sg-header-sub-heading")
                     if lu_tag:
-                        text = lu_tag.get_text(strip=True)
-                        text = text.replace("(Last Updated: ", "").replace(")", "").strip()
-                        new_course["lastUpdated"] = text
+                        raw = lu_tag.get_text(strip=True)
+                        new_course["lastUpdated"] = _clean_last_updated(raw)
 
                     # Grade (overall course grade)
                     grade_tag = header_div.find("span", class_="sg-header-heading sg-right")
