@@ -22,12 +22,17 @@ const APIRoutes: IAPIRoute[] = [
     ],
     exampleRequest: `/api/info?username=john&password=doe`,
     exampleResponse: `{
-"birthdate": "12/24/2003",
-"campus": "Heritage High School",
-"grade": "12",
 "id": "123456",
-"name": "Doe, Jonh Thomas",
-"counselor": "NELSON-MOON, LANNIS" 
+"name": "Doe, John Thomas",
+"birthdate": "1/31/2010",
+"campus": "Heritage High School",
+"grade": "10",
+"counselor": "NELSON-MOON, LANNIS",
+"house_team": "",
+"calander": "Full Day Calendar",
+"homeroom": "A206",
+"language": "English",
+"homeroom_teacher": "WILLIAMS, JASON"
 }`
   },
   {
