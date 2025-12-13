@@ -345,6 +345,46 @@ const APIRoutes: IAPIRoute[] = [
   },
   {
     type: "GET",
+    id: "attendance",
+    title: "Student Attendance",
+    description:
+      "Get a student's monthly attendance calendar from HAC, returning only formatted attendance events for each date where attendance activity exists.",
+    queryParameters: [
+      {
+        title: "username",
+        type: "string",
+        description: "HAC Username",
+        required: true
+      },
+      {
+        title: "password",
+        type: "string",
+        description: "HAC Password",
+        required: true
+      }
+    ],
+    exampleRequest: `/api/attendance?username=john&password=doe`,
+    exampleResponse: `{
+  "formattedEvents": [
+    {
+      "date": "2025-12-03",
+      "events": [
+        "Period 2: Present",
+        "Period 3: Drivers License / Permit",
+        "Period 4: Drivers License / Permit"
+      ]
+    },
+    {
+      "date": "2025-12-08",
+      "events": [
+        "Period 1: Excused Absence Parent Note"
+      ]
+    }
+  ]
+}`
+  },
+  {
+    type: "GET",
     id: "transcript",
     title: "Student Transcript",
     description: "Get a student's transcript",
