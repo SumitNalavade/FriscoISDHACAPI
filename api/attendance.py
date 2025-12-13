@@ -20,8 +20,6 @@ def format_attendance_entries(attendance):
 
     for entry in attendance.get("entries", []):
         events = entry.get("events", [])
-        if not events:
-            continue
 
         day = entry["day"]
         date_str = f"{year}-{month_num:02d}-{day:02d}"
@@ -41,11 +39,10 @@ def format_attendance_entries(attendance):
 
             formatted_events.append(f"Period {period}: {label}")
 
-        if formatted_events:
-            formatted.append({
-                "date": date_str,
-                "events": formatted_events
-            })
+        formatted.append({
+            "date": date_str,
+            "events": formatted_events  # empty list if none
+        })
 
     return formatted
 
@@ -116,10 +113,6 @@ def parse_attendance(html):
             continue
 
         title = td.get("title")
-        if not title:
-            continue
-
-        date = f"{year}-{month}-{day.zfill(2)}"
 
         entries.append({
             "day": int(day),
