@@ -29,7 +29,7 @@ class handler(BaseHTTPRequestHandler):
         try:
             session = getRequestSession(username, password)
 
-            resp = session.get(SCHEDULE_URL, timeout=10)
+            resp = session.get(SCHEDULE_URL)
             resp.raise_for_status()
             html = resp.text
 

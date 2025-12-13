@@ -23,7 +23,7 @@ def getRequestSession(username: str, password: str) -> requests.Session:
 
     session.headers.update({"User-Agent": DEFAULT_USER_AGENT})
 
-    resp = session.get(LOGIN_URL, timeout=10)
+    resp = session.get(LOGIN_URL)
     resp.raise_for_status()
     request_verification_token = _extract_verification_token(resp.text)
 
@@ -45,7 +45,7 @@ def getRequestSession(username: str, password: str) -> requests.Session:
         "LogOnDetails.Password": password,
     }
 
-    login_resp = session.post(LOGIN_URL, data=payload, headers=headers, timeout=10)
+    login_resp = session.post(LOGIN_URL, data=payload, headers=headers)
     login_resp.raise_for_status()
 
     return session

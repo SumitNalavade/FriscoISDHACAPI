@@ -120,7 +120,6 @@ class handler(BaseHTTPRequestHandler):
                 ASSIGNMENTS_URL,
                 data=pastCoursesRequestPayload,
                 headers=pastCoursesRequestHeaders,
-                timeout=10,
             )
             pastCoursesPageContent.raise_for_status()
             html = pastCoursesPageContent.text

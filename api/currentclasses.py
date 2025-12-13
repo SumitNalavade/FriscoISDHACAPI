@@ -43,7 +43,7 @@ class handler(BaseHTTPRequestHandler):
         try:
             session = getRequestSession(username, password)
 
-            resp = session.get(ASSIGNMENTS_URL, timeout=10)
+            resp = session.get(ASSIGNMENTS_URL)
             resp.raise_for_status()
             html = resp.text
 
