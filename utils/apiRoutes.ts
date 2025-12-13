@@ -37,32 +37,6 @@ const APIRoutes: IAPIRoute[] = [
   },
   {
     type: "GET",
-    id: "gpa",
-    title: "Student GPAs",
-    description: "Get a student's most recently published GPAs and rank",
-    queryParameters: [
-      {
-        title: "username",
-        type: "string",
-        description: "HAC Username",
-        required: true
-      },
-      {
-        title: "password",
-        type: "string",
-        description: "HAC Password",
-        required: true
-      }
-    ],
-    exampleRequest: `/api/gpa?username=john&password=doe`,
-    exampleResponse: `{
-"unweightedGPA" : "3.8800",
-"weightedGPA" : "5.0500",
-"rank" : "34 / 449"
-}`
-  },
-  {
-    type: "GET",
     id: "schedule",
     title: "Student Schedule",
     description: "Get a student's schedule",
