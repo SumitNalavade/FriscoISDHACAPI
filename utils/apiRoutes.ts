@@ -249,6 +249,102 @@ const APIRoutes: IAPIRoute[] = [
   },
   {
     type: "GET",
+    id: "calendar",
+    title: "Student Calendar",
+    description: "Get a student’s weekly academic calendar, showing every class for each day of the week and detailed assignment information sourced directly from HAC. Defaults to the current week if no date is specified.",
+    queryParameters: [
+      {
+        title: "username",
+        type: "string",
+        description: "HAC Username",
+        required: true
+      },
+      {
+        title: "password",
+        type: "string",
+        description: "HAC Password",
+        required: true
+      },
+      {
+        title: "startdate",
+        type: "string",
+        description: "A week's start date in MM/DD/YYYY format",
+        required: false
+      }
+    ],
+    exampleRequest: `/api/calendar?username=john&password=doe&startdate=11/17/2025`,
+    exampleResponse: `{
+  "studentSchedule": {
+    "days": {
+      "2025-12-08": {
+        "weekday": "Monday",
+        "classes": [
+          {
+            "name": "Chemistry Adv S1",
+            "period": "1",
+            "teacher": "JOKANOVIC SAVIC, MIRELA",
+            "items": [
+              {
+                "type": "note",
+                "text": "Excused Absence Parent Note"
+              },
+              {
+                "title": "Lab Practical- Law of Conservation of Mass",
+                "type": "Assignment",
+                "category": "Assessment of Learning",
+                "dueDate": "2025-12-08",
+                "score": 93,
+                "maxScore": 100,
+                "gradeText": "93/100",
+                "canBeDropped": false,
+                "extraCredit": false,
+                "hasAttachments": false
+              }
+            ]
+          },
+          {
+            "name": "AP World History S1",
+            "period": "4",
+            "teacher": "MURPHEY, MOLLIE",
+            "items": []
+          }
+        ]
+      },
+      "2025-12-09": {
+        "weekday": "Tuesday",
+        "classes": [
+          {
+            "name": "English 2 Adv S1",
+            "period": "1",
+            "teacher": "JONES GOSSETT, RALA",
+            "items": [
+              {
+                "title": "TFA - Reading packet",
+                "type": "Assignment",
+                "category": "Progress Check for Learning",
+                "dueDate": "2025-12-09",
+                "status": "CNS",
+                "canBeDropped": false
+              },
+              {
+                "title": "Unit 2 Reading Quiz #2",
+                "type": "Assignment",
+                "category": "Assessment of Learning",
+                "dueDate": "2025-12-09",
+                "score": 95,
+                "maxScore": 100,
+                "gradeText": "95/100"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}`
+  },
+  {
+    type: "GET",
     id: "transcript",
     title: "Student Transcript",
     description: "Get a student's transcript",
