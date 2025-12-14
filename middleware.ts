@@ -5,7 +5,7 @@ import { Ratelimit } from '@upstash/ratelimit'
 const redis = Redis.fromEnv();
 const ratelimit = new Ratelimit({
     redis: redis,
-    limiter: Ratelimit.slidingWindow(5, '60 s')
+    limiter: Ratelimit.slidingWindow(1000, '86400 s')
 })
 
 export default async function middleware(request: NextRequest) {
