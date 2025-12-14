@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Too Many Requests</title>
+    <meta name="robots" content="noindex" />
+    <style>
+      :root { color-scheme: light dark; }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
+          "Segoe UI Emoji";
+        line-height: 1.5;
+      }
+      .wrap {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+      .card {
+        max-width: 720px;
+        width: 100%;
+        border: 1px solid rgba(127,127,127,.25);
+        border-radius: 16px;
+        padding: 28px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.08);
+        background: rgba(127,127,127,.06);
+      }
+      h1 {
+        margin: 0 0 8px 0;
+        font-size: 28px;
+        letter-spacing: -0.02em;
+      }
+      p { margin: 0 0 14px 0; opacity: .9; }
+      .pill {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(127,127,127,.35);
+        font-size: 12px;
+        opacity: .9;
+        margin-top: 6px;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+      .small { font-size: 12px; opacity: .8; margin-top: 14px; }
+      .hint {
+        border-left: 3px solid rgba(127,127,127,.45);
+        padding-left: 12px;
+        margin-top: 12px;
+        font-size: 14px;
+        opacity: .9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <main class="card" role="main" aria-labelledby="title">
+        <h1 id="title">Request blocked</h1>
+
+        <p>
+          You’ve sent too many requests in a short period of time, so we temporarily blocked this request to keep the service
+          stable.
+        </p>
+
+        <div class="pill">HTTP 429 · Too Many Requests</div>
+
+        <div class="hint">
+          If you’re integrating with this API, please double-check that your client is using it correctly:
+          <ul>
+            <li>Respect published rate limits</li>
+            <li>Batch requests when possible</li>
+            <li>Use retries with exponential backoff</li>
+            <li>Avoid tight polling loops</li>
+          </ul>
+        </div>
+
+        <p class="small">
+          If this continues after waiting, review your integration or check the API documentation. Repeated violations may
+          result in longer cooldowns.
+        </p>
+      </main>
+    </div>
+  </body>
+</html>
