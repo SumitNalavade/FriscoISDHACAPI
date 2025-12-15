@@ -1,5 +1,7 @@
 import requests
+import threading
 from bs4 import BeautifulSoup
+from api._lib.sessionCache import save_session_cookies, get_session_cookies
 
 LOGIN_URL = "https://hac.friscoisd.org/HomeAccess/Account/LogOn?ReturnUrl=%2fHomeAccess%2f"
 
@@ -8,6 +10,7 @@ DEFAULT_USER_AGENT = (
     "AppleWebKit/537.36 (KHTML, like Gecko) "
     "Chrome/36.0.1985.125 Safari/537.36"
 )
+
 
 def _extract_verification_token(html: str) -> str:
     """Parse the login page and return __RequestVerificationToken or raise."""
@@ -21,6 +24,12 @@ def _extract_verification_token(html: str) -> str:
 def getRequestSession(username: str, password: str) -> requests.Session:
     session = requests.Session()
 
+    # Check if redis already stores the session credentials. Then rebuild the session object
+    cookies = get_session_cookies(username, password)
+    if(cookies):
+        session.cookies = requests.utils.cookiejar_from_dict(cookies)
+        return session
+    
     session.headers.update({"User-Agent": DEFAULT_USER_AGENT})
 
     resp = session.get(LOGIN_URL)
@@ -47,5 +56,11 @@ def getRequestSession(username: str, password: str) -> requests.Session:
 
     login_resp = session.post(LOGIN_URL, data=payload, headers=headers)
     login_resp.raise_for_status()
+
+    threading.Thread(
+        target=save_session_cookies,
+        args=(username, password, session),
+        daemon=True
+    ).start()
 
     return session
