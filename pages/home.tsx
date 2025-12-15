@@ -72,6 +72,13 @@ const Home: React.FC = () => {
                         </p>
                     </div>
 
+                    <h3 className="text-2xl font-bold mt-10 my-2 text-headline">Fair Usage Guidelines</h3>
+                    <p>This API is intended to support student learning, projects, and experimentation in a fair and responsible way.</p>
+                    <p>Please use the API thoughtfully by avoiding rapid or repeated requests in tight loops, and batching requests when possible.</p>
+                    <p>When building applications, add short delays between requests, cache results, and use retries with exponential backoff instead of constant polling.</p>
+                    <p>These limits help keep the service available for everyone. Requests that exceed fair usage thresholds may be temporarily limited.</p>
+
+
                     <h3 className="text-2xl font-bold mt-10 my-2 text-headline">Behind The Scenes</h3>
                     <p>The API uses sends HTTP POST requests to Frisco ISD HAC servers with a username and password.</p>
                     <p>If the login is authenticated, HAC responds with an HTML page with student information.</p>
