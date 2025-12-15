@@ -72,6 +72,12 @@ const Home: React.FC = () => {
                         </p>
                     </div>
 
+                    <h3 className="text-2xl font-bold mt-10 my-2 text-headline">Production Usage (Self-Host Guide)</h3>
+                    <p>Because the public deployment enforces shared rate limits, you should deploy your own copy of this API for production or high-volume use.</p>
+                    <p>This project is implemented using Next.js serverless API routes and Edge middleware, and works best on platforms that natively support this architecture such as Vercel.</p>
+                    <p>See the <a className="underline text-blue-500" target="__blank" href="https://github.com/SumitNalavade/FriscoISDHACAPI">self-host guide on Github</a>.</p>
+
+
                     <h3 className="text-2xl font-bold mt-10 my-2 text-headline">Fair Usage Guidelines</h3>
                     <p>This API is intended to support student learning, projects, and experimentation in a fair and responsible way.</p>
                     <p>Please use the API thoughtfully by avoiding rapid or repeated requests in tight loops, and batching requests when possible.</p>
