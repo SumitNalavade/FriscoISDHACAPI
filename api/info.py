@@ -4,10 +4,11 @@ import json
 
 from bs4 import BeautifulSoup
 from api._lib.getRequestSession import getRequestSession
-from api._lib.parsers import _get_text_or_empty_by_css_selector, _get_text_or_empty_by_id
+from api._lib.parsers import _get_first_text_or_empty_by_css_selector, _get_text_or_empty_by_id
 
 REGISTRATION_URL = "https://hac.friscoisd.org/HomeAccess/Content/Student/Registration.aspx"
 SCHEDULE_URL = "https://hac.friscoisd.org/HomeAccess/Content/Student/Classes.aspx"
+
 
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -43,12 +44,19 @@ class handler(BaseHTTPRequestHandler):
                 reg_soup, "plnMain_lblCounselor")
             student_campus = _get_text_or_empty_by_id(
                 reg_soup, "plnMain_lblBuildingName")
-            student_grade = _get_text_or_empty_by_id(reg_soup, "plnMain_lblGrade")
-            student_house_team = _get_text_or_empty_by_id(reg_soup, "plnMain_lblHouseTeam")
-            student_calendar = _get_text_or_empty_by_id(reg_soup, "plnMain_lblCalendar")
-            student_homeroom = _get_text_or_empty_by_id(reg_soup, "plnMain_lblHomeroom")
-            student_language = _get_text_or_empty_by_id(reg_soup, "plnMain_lblLanguage")
-            student_homeroom_teacher = _get_text_or_empty_by_css_selector(reg_soup, "#plnMain_lblHomeroomTeacher > a:nth-child(1)")[0]
+            student_grade = _get_text_or_empty_by_id(
+                reg_soup, "plnMain_lblGrade")
+            student_house_team = _get_text_or_empty_by_id(
+                reg_soup, "plnMain_lblHouseTeam")
+            student_calendar = _get_text_or_empty_by_id(
+                reg_soup, "plnMain_lblCalendar")
+            student_homeroom = _get_text_or_empty_by_id(
+                reg_soup, "plnMain_lblHomeroom")
+            student_language = _get_text_or_empty_by_id(
+                reg_soup, "plnMain_lblLanguage")
+            student_homeroom_teacher = _get_first_text_or_empty_by_css_selector(
+                reg_soup, "#plnMain_lblHomeroomTeacher > a:nth-child(1)"
+            )
 
             # ---- Try to get student id from registration page ----
             student_id = _get_text_or_empty_by_id(
